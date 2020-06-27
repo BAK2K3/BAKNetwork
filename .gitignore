@@ -4,8 +4,8 @@
 migrations/
 baknetworks/config.json
 .vscode/
-Procfile
-runtime.txt
+#Procfile
+#runtime.txt
 
 
 # Byte-compiled / optimized / DLL files
