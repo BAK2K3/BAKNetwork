@@ -104,8 +104,8 @@ def rnn_tolstoy():
     if rnnform.submitrnn.data and rnnform.validate():
 
         start_seed = rnnform.textrnn.data
-        gen_size = 1000
-        temp = 0.75
+        gen_size = 500
+        temp = 1
         filename='tolstoybot'
 
         rnnoutput = generate_text(start_seed, gen_size, temp, filename)

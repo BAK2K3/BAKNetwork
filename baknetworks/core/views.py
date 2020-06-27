@@ -28,6 +28,6 @@ def contact():
     return render_template('contact.html')
 
 @core.route('/privacy')
-def privacy:
+def privacy():
 
     return render_template('privacy.html')
