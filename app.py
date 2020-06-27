@@ -1,4 +1,4 @@
-from baknetworks import app
+from baknetworks import app, port
 from flask import render_template
 
 if __name__ == '__main__':
