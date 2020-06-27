@@ -9,13 +9,19 @@ from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
 from sqlalchemy.orm.exc import NoResultFound
 
+#Dev
+# google_blueprint = make_google_blueprint(client_id=app.config["GOOGLE_ID"],
+#                                 client_secret=app.config["GOOGLE_SECRET"], 
+#                                 offline=True,
+#                                 scope=['openid https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'],
+#                                 storage=SQLAlchemyStorage(OAuth, db.session, user=current_user))
 
-google_blueprint = make_google_blueprint(client_id=app.config["GOOGLE_ID"],
-                                client_secret=app.config["GOOGLE_SECRET"], 
+#Deploy
+google_blueprint = make_google_blueprint(client_id=os.environ.get('GOOGLE_ID', None),
+                                client_secret=os.environ.get('GOOGLE_SECRET', None), 
                                 offline=True,
                                 scope=['openid https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'],
                                 storage=SQLAlchemyStorage(OAuth, db.session, user=current_user))
-
 
     
 @oauth_authorized.connect_via(google_blueprint)

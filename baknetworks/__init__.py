@@ -5,6 +5,7 @@ import os
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = 'true'
+port = int(os.environ.get("PORT", 5000))
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -14,8 +15,12 @@ from flask_login import LoginManager
 
 ###FLASK SETUP###
 app = Flask(__name__)
-app.config.from_json('config.json')
+#Dev
+#app.config.from_json('config.json')
 app.static_folder = 'static'
+
+#deploy
+app.secret_key = os.environ.get('SECRET_KEY', None)
 
 #Import Databases and User Oauth
 from baknetworks.models import db, login_manager

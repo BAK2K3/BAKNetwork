@@ -4,6 +4,9 @@
 migrations/
 baknetworks/config.json
 .vscode/
+Procfile
+runtime.txt
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
