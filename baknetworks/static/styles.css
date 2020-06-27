@@ -1,0 +1,29 @@
+/* Style.css */
+
+
+body {
+    background-image: url("bg-dark.jpg");
+    /* https://unsplash.com/photos/xotmnyN3gdc  */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    font-family: 'Rubik', sans-serif;
+  }
+
+.logo-image{
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: -6px;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 200px;
+  overflow: auto;
+  }
+  .table-wrapper-scroll-y {
+  display: block;
+  }

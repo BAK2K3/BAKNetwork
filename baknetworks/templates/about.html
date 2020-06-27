@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <h1 class="display-3">
+                
+                Hi {{current_user.name.split(" ")[0]}}.
+             </h1>
+        </div>
+        
+        <hr class="my-2">
+        <div class="d-flex justify-content-center">
+            <p>Thanks for taking the time to visit my portfolio.</p>
+
+            
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Jumbotron -->
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <h1 class="display-3">Tolstoybot</h1>
+        </div>
+        
+        <hr class="my-2">
+        <div class="d-flex justify-content-center">
+            <p class="lead">A deep GRU based RNN</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- RNN User input Form-->
+
+<div class="container pt-4 bg-dark text-white text-center">
+
+    <span class="display-4"> Enter a small text input to begin: </span><br>
+    This could be a name or a sentence.<br>
+    If your input is an incomplete sentence, make sure you end with with a space " "<br>
+    so the model gets off on the right foot!<br>
+
+    <hr class="my-2">
+
+    <form method="POST">
+        <div class='container pt-4'>
+        <div class="form-group">
+            {{rnnform.hidden_tag()}}
+            {{rnnform.textrnn(class="form-control bg-light border border-light")}}
+            <br>
+            {{rnnform.submitrnn(class="btn btn-secondary mb-2")}}   
+      </div>
+    </form>
+
+      {% if rnnoutput %}
+
+      <hr class="my-2">
+
+      <textarea class="form-control" rows="3">{{rnnoutput}}</textarea>
+
+      <br>
+
+      {%endif%}
+
+    </div>
+    
+
+
+<!-- Comments -->
+
+<div class="container fixed-bottom">
+    <div id="accordion">
+        <div class="card">
+            <div class="card text-center" id="headingOne">
+                <button class="btn btn-secondary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <h3>RNN Tolstoybot Comments</h3>
+                </button>
+            </div>       
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    
+                    <!-- Comment Form -->
+                    <form method="POST">
+                        <div class=form-group>
+                        <div class="row">
+                            {{commentform.hidden_tag()}}
+                            <div class='col text-center'>
+                            {{commentform.text.label}}
+                            </div>
+                            <div class='col text-center'>
+                                {{commentform.submit(class="btn btn-secondary mb-2")}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col mb-2'>
+                            {{commentform.text(class="form-control border border-dark")}}
+                            </div>
+                        </div>
+                    </form>
+                
+                    <!-- Scrollable Table -->
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table class="table table-bordered table-dark mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No </th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Date</th>
+                                    <th scope='col' colspan="4">Comment</th>                                                          
+                                </tr>
+                            </thead>
+                            <tbody>
+                        
+                                {% for comment in commentquery %}
+                                <tr>
+                                    <th scope="row">{{loop.index}}</th>
+                                    <td>{{comment.users.name}}</td>
+                                    <td>{{comment.date.date()}}</td>
+                                    <th colspan="4">{{comment.text}}</th>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

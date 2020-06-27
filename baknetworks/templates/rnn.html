@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Jumbotron -->
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <h1 class="display-3">Recurrent Neural Network</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-4 bg-dark text-white text-center">
+
+<span class="display-4"> What's an RNN? </span><br>
+    An RNN uses internal memory states to "remember" sequences of information.<br>
+    <hr class="my-2">
+    From training an RNN on huge corpuses of text (such as shakespears texts, or War and Pace by Tolstoy)<br>
+    RNN's have the ability to predict subsequent information from previous sequences of information.
+
+    <hr class="my-2">
+
+    The below implementations of RNNS are capable of producing text on a <em>letter by letter basis</em>!<br>
+    Choose a network below to experiment with.
+    
+</div>
+
+
+<!-- Choices -->
+
+<div class="container pt-4">
+    <div class="row d-flex p-2">       
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    Shakesbot
+                </div>
+                <div class="card-body text-center">
+                <h5 class="card-title text-center">Single Layer LSTM Network</h5>
+                <p class="card-text text-center">Generate shakespeare-like text using a simple RNN </p>
+                <a href="{{url_for('networks.rnn_shake')}}" class="btn btn-secondary text-center">Shakesbot</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    Tolstoybot
+                </div>
+                <div class="card-body text-center">
+                <h5 class="card-title text-center">Deep GRU Network</h5>
+                <p class="card-text text-center">Generate Tolstoy-like text using a deep experimental model.</p>
+                <a href="{{url_for('networks.rnn_tolstoy')}}" class="btn btn-secondary text-center">Tolstoybot</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
