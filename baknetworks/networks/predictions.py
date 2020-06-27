@@ -7,7 +7,10 @@ import numpy as np
 import os
 
 def prepare_network(filename):
-    path_to_file = os.path.join(current_app.root_path, "static\models\\", filename+"".join('.txt'))
+    #Dev
+    # path_to_file = os.path.join(current_app.root_path, "static\models\\", filename+"".join('.txt'))
+    #Deploy
+    path_to_file = os.path.join(current_app.root_path, "static/models/", filename+"".join('.txt'))
     text = open(path_to_file, 'r', encoding='utf-8').read()
     vocab = sorted(set(text))
     char_to_ind = {char:ind for ind, char in enumerate(vocab)}
@@ -16,7 +19,7 @@ def prepare_network(filename):
 
 def generate_text(start_seed,gen_size=500,temp=1, filename='shakespeare'):
 
-    filepath = os.path.join(current_app.root_path, "static\models\\", filename+"".join('.h5'))
+    filepath = os.path.join(current_app.root_path, "static/models/", filename+"".join('.h5'))
    
     char_to_ind, ind_to_char = prepare_network(filename)
 
