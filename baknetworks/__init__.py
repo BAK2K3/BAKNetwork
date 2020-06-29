@@ -13,7 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_login import LoginManager
-from flask_talisman import Talisman
+# from flask_talisman import Talisman
 
 
 
@@ -29,17 +29,17 @@ app.config['PREFERRED_URL_SCHEME'] = 'https'
 app.secret_key = os.environ.get('SECRET_KEY', None)
 
 ##Set up FLASK HTTPS security
-csp = {
-    'default-src': [
-        '\'self\'',
-        'stackpath.bootstrapcdn.com',
-        'code.jquery.com',
-        'cdn.jsdelivr.net'
-        'fonts.googleapis.com'
-        'w3.org'
-    ]
-}
-talisman = Talisman(app, content_security_policy=csp)
+# csp = {
+#     'default-src': [
+#         # '\'self\'',
+#         'stackpath.bootstrapcdn.com',
+#         'code.jquery.com',
+#         'cdn.jsdelivr.net'
+#         'fonts.googleapis.com'
+#         'w3.org'
+#     ]
+# }
+# talisman = Talisman(app, content_security_policy=csp)
 
 
 # def _force_https():
