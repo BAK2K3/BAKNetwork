@@ -8,7 +8,7 @@ import os
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = 'true'
 port = int(os.environ.get("PORT", 5000))
 
-from flask import Flask, request
+from flask import Flask, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_dance.contrib.google import make_google_blueprint, google
