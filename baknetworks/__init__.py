@@ -35,9 +35,19 @@ csp = {
         'stackpath.bootstrapcdn.com',
         'code.jquery.com',
         'cdn.jsdelivr.net'
-        'fonts.googleapis.com'
+        '*.googleapis.com'
         'w3.org'
+    ],
+    'script-src': [
+        '\'self\'',
+        'cdn.jsdelivr.net'
     ]
+    'img-src': [
+        '\'self\'',
+        '*.googleusercontent.com'
+    ]
+
+
 }
 talisman = Talisman(app, content_security_policy=csp)
 
