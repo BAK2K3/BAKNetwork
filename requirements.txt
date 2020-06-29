@@ -6,6 +6,7 @@ Flask-Migrate
 Flask-OAuth
 Flask-OAuthlib
 Flask-SQLAlchemy
+flask-talisman
 Flask-WTF
 httplib2
 idna

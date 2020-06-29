@@ -16,10 +16,10 @@ def error_403(error):
 def error_401(error):
     return render_template('error_pages/401.html'), 401
 
-#Force HTTPS
-@error_pages.before_request
-def before_request():
-    if not request.is_secure and app.env != "development":
-        url = request.url.replace("http://", "https://", 1)
-        code = 301
-        return redirect(url, code=code)
+# #Force HTTPS
+# @error_pages.before_request
+# def before_request():
+#     if not request.is_secure and app.env != "development":
+#         url = request.url.replace("http://", "https://", 1)
+#         code = 301
+#         return redirect(url, code=code)

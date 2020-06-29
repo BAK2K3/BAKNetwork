@@ -13,15 +13,19 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_login import LoginManager
+from flask-talisman import Talisman
 
 ###FLASK SETUP###
 app = Flask(__name__)
 #Dev
 #app.config.from_json('config.json')
 app.static_folder = 'static'
-
 #deploy
 app.secret_key = os.environ.get('SECRET_KEY', None)
+
+##Set up FLASK HTTPS security
+Talisman(app)
+
 
 #Import Databases and User Oauth
 from baknetworks.models import db, login_manager
