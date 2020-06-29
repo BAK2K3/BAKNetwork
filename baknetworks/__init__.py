@@ -14,7 +14,7 @@ from flask_migrate import Migrate
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_login import LoginManager
 from flask_talisman import Talisman
-import functools
+
 
 
 ###FLASK SETUP###
@@ -38,7 +38,7 @@ csp = {
     ]
 }
 talisman = Talisman(app, content_security_policy=csp)
-url_for = functools.partial(Flask.url_for, _scheme='https')
+
 
 def _force_https():
     # my local dev is set on debug, but on AWS it's not (obviously)
