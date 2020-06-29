@@ -50,6 +50,10 @@ def _force_https():
             reqctx.url_adapter.url_scheme = 'https'
 app.before_request(_force_https)
 
+@app.before_request
+def force_https():
+    if request.endpoint in app.view_functions and not request.is_secure:
+        return redirect(request.url.replace('http://', 'https://'))
 
 #Import Databases and User Oauth
 from baknetworks.models import db, login_manager
