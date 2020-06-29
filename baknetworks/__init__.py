@@ -13,7 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_login import LoginManager
-# from flask_talisman import Talisman
+from flask_talisman import Talisman
 
 
 
@@ -28,36 +28,33 @@ app.config['PREFERRED_URL_SCHEME'] = 'https'
 #Deploy
 app.secret_key = os.environ.get('SECRET_KEY', None)
 
-##Set up FLASK HTTPS security
-# csp = {
-#     'default-src': [
-#         # '\'self\'',
-#         'stackpath.bootstrapcdn.com',
-#         'code.jquery.com',
-#         'cdn.jsdelivr.net'
-#         'fonts.googleapis.com'
-#         'w3.org'
-#     ]
-# }
-# talisman = Talisman(app, content_security_policy=csp)
+#Set up FLASK HTTPS security
+csp = {
+    'default-src': [
+        # '\'self\'',
+        'stackpath.bootstrapcdn.com',
+        'code.jquery.com',
+        'cdn.jsdelivr.net'
+        'fonts.googleapis.com'
+        'w3.org'
+    ]
+}
+talisman = Talisman(app, content_security_policy=csp)
 
 
-# def _force_https():
-#     # my local dev is set on debug, but on AWS it's not (obviously)
-#     # I don't need HTTPS on local, change this to whatever condition you want.
-#     if not app.debug: 
-#         from flask import _request_ctx_stack
-#         if _request_ctx_stack is not None:
-#             reqctx = _request_ctx_stack.top
-#             reqctx.url_adapter.url_scheme = 'https'
-# app.before_request(_force_https)
+class ReverseProxied(object):
+    def __init__(self, app):
+        self.app = app
 
-# @app.before_request
-# def before_request():
-#     if not request.is_secure and app.env != "development":
-#         url = request.url.replace("http://", "https://", 1)
-#         code = 301
-#         return redirect(url, code=code)
+    def __call__(self, environ, start_response):
+        scheme = environ.get('HTTP_X_FORWARDED_PROTO')
+        if scheme:
+            environ['wsgi.url_scheme'] = scheme
+        return self.app(environ, start_response)
+
+app.wsgi_app = ReverseProxied(app.wsgi_app)
+
+
 
 #Import Databases and User Oauth
 from baknetworks.models import db, login_manager
