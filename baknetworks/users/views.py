@@ -17,7 +17,7 @@ def login():
     if not current_user.is_authenticated:
         return redirect(url_for('google.login'))
     
-    return redirect(url_for('core.about')
+    return redirect(url_for('core.about'))
 
 @users.route('/logout')
 # @login_required
