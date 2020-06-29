@@ -41,14 +41,13 @@ csp = {
     'script-src': [
         '\'self\'',
         'cdn.jsdelivr.net'
-    ]
+    ],
     'img-src': [
         '\'self\'',
         '*.googleusercontent.com'
     ]
-
-
 }
+
 talisman = Talisman(app, content_security_policy=csp)
 
 #Set up redirects to be HTTPS 
