@@ -31,7 +31,7 @@ app.secret_key = os.environ.get('SECRET_KEY', None)
 #Set up FLASK HTTPS security
 csp = {
     'default-src': [
-        # '\'self\'',
+         '\'self\'',
         'stackpath.bootstrapcdn.com',
         'code.jquery.com',
         'cdn.jsdelivr.net'
@@ -41,7 +41,7 @@ csp = {
 }
 talisman = Talisman(app, content_security_policy=csp)
 
-
+#Set up redirects to be HTTPS 
 class ReverseProxied(object):
     def __init__(self, app):
         self.app = app
@@ -51,9 +51,7 @@ class ReverseProxied(object):
         if scheme:
             environ['wsgi.url_scheme'] = scheme
         return self.app(environ, start_response)
-
 app.wsgi_app = ReverseProxied(app.wsgi_app)
-
 
 
 #Import Databases and User Oauth
