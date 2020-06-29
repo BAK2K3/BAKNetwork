@@ -38,7 +38,17 @@ csp = {
     ]
 }
 talisman = Talisman(app, content_security_policy=csp)
-url_for = functools.partial(url_for, _scheme='https')
+url_for = functools.partial(Flask.url_for, _scheme='https')
+
+def _force_https():
+    # my local dev is set on debug, but on AWS it's not (obviously)
+    # I don't need HTTPS on local, change this to whatever condition you want.
+    if not app.debug: 
+        from flask import _request_ctx_stack
+        if _request_ctx_stack is not None:
+            reqctx = _request_ctx_stack.top
+            reqctx.url_adapter.url_scheme = 'https'
+app.before_request(_force_https)
 
 
 #Import Databases and User Oauth
