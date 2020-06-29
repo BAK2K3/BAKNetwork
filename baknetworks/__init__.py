@@ -40,20 +40,22 @@ csp = {
 talisman = Talisman(app, content_security_policy=csp)
 
 
-def _force_https():
-    # my local dev is set on debug, but on AWS it's not (obviously)
-    # I don't need HTTPS on local, change this to whatever condition you want.
-    if not app.debug: 
-        from flask import _request_ctx_stack
-        if _request_ctx_stack is not None:
-            reqctx = _request_ctx_stack.top
-            reqctx.url_adapter.url_scheme = 'https'
-app.before_request(_force_https)
+# def _force_https():
+#     # my local dev is set on debug, but on AWS it's not (obviously)
+#     # I don't need HTTPS on local, change this to whatever condition you want.
+#     if not app.debug: 
+#         from flask import _request_ctx_stack
+#         if _request_ctx_stack is not None:
+#             reqctx = _request_ctx_stack.top
+#             reqctx.url_adapter.url_scheme = 'https'
+# app.before_request(_force_https)
 
 @app.before_request
-def force_https():
-    if request.endpoint in app.view_functions and not request.is_secure:
-        return redirect(request.url.replace('http://', 'https://'))
+def before_request():
+    if not request.is_secure and app.env != "development":
+        url = request.url.replace("http://", "https://", 1)
+        code = 301
+        return redirect(url, code=code)
 
 #Import Databases and User Oauth
 from baknetworks.models import db, login_manager
