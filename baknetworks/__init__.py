@@ -13,7 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_login import LoginManager
-from flask-talisman import Talisman
+from flask_talisman import Talisman
 
 ###FLASK SETUP###
 app = Flask(__name__)
@@ -31,11 +31,6 @@ Talisman(app)
 from baknetworks.models import db, login_manager
 from baknetworks.users.user_oauth import google_blueprint
 
-import tensorflow as tf
-
-# physical_devices = tf.config.list_physical_devices('GPU')
-# tf.config.experimental.set_memory_growth(physical_devices[0], enable=True)
-
 
 ####SQL Set Up####
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -47,6 +42,7 @@ app.register_blueprint(google_blueprint, url_prefix="/login")
 db.init_app(app)
 Migrate(app,db)
 
+###Set up log in manager###
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
 
