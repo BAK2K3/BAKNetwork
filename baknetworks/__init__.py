@@ -34,13 +34,14 @@ csp = {
          '\'self\'',
         'stackpath.bootstrapcdn.com',
         'code.jquery.com',
-        'cdn.jsdelivr.net'
-        '*.googleapis.com'
+        'cdn.jsdelivr.net',
+        '*.googleapis.com',
         'w3.org'
     ],
     'script-src': [
         '\'self\'',
-        'cdn.jsdelivr.net'
+        'cdn.jsdelivr.net',
+        'stackpath.boostrapcdn.com'
     ],
     'img-src': [
         '\'self\'',
