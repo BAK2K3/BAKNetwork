@@ -36,12 +36,14 @@ csp = {
         'code.jquery.com',
         'cdn.jsdelivr.net',
         '*.googleapis.com',
+        '*.gstatic.com',
         'w3.org'
     ],
     'script-src': [
         '\'self\'',
         'cdn.jsdelivr.net',
-        'stackpath.boostrapcdn.com'
+        'code.jquery.com',
+        'stackpath.bootstrapcdn.com'
     ],
     'img-src': [
         '\'self\'',
