@@ -1,6 +1,6 @@
 ##handlers.py error_pages##
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect
 
 error_pages = Blueprint('error_pages', __name__)
 
@@ -16,3 +16,10 @@ def error_403(error):
 def error_401(error):
     return render_template('error_pages/401.html'), 401
 
+#Force HTTPS
+@error_pages.before_request
+def before_request():
+    if not request.is_secure and app.env != "development":
+        url = request.url.replace("http://", "https://", 1)
+        code = 301
+        return redirect(url, code=code)

@@ -3,7 +3,8 @@
 
 import os
 
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
+#Testing only
+#os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = 'true'
 port = int(os.environ.get("PORT", 5000))
 
