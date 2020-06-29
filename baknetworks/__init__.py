@@ -24,7 +24,16 @@ app.static_folder = 'static'
 app.secret_key = os.environ.get('SECRET_KEY', None)
 
 ##Set up FLASK HTTPS security
-Talisman(app)
+csp = {
+    'default-src': [
+        '\'self\'',
+        'stackpath.bootstrapcdn.com',
+        'code.jquery.com',
+        'cdn.jsdelivr.net'
+    ]
+}
+talisman = Talisman(app, content_security_policy=csp)
+
 
 
 #Import Databases and User Oauth
