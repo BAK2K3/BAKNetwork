@@ -15,9 +15,9 @@ users = Blueprint('users',__name__)
 @users.route('/google')
 def login():
     if not current_user.is_authenticated:
-        return redirect(url_for('google.login'))
+        return redirect(url_for('google.login'), _scheme='https', external=True)
     
-    return redirect(url_for('core.about'))
+    return redirect(url_for('core.about', _scheme='https', external=True))
 
 @users.route('/logout')
 # @login_required
