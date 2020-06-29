@@ -14,13 +14,18 @@ from flask_migrate import Migrate
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_login import LoginManager
 from flask_talisman import Talisman
+import functools
+
 
 ###FLASK SETUP###
 app = Flask(__name__)
+app.static_folder = 'static'
+app.config['PREFERRED_URL_SCHEME'] = 'https'
+
+
 #Dev
 #app.config.from_json('config.json')
-app.static_folder = 'static'
-#deploy
+#Deploy
 app.secret_key = os.environ.get('SECRET_KEY', None)
 
 ##Set up FLASK HTTPS security
@@ -33,7 +38,7 @@ csp = {
     ]
 }
 talisman = Talisman(app, content_security_policy=csp)
-
+url_for = functools.partial(url_for, _scheme='https')
 
 
 #Import Databases and User Oauth
