@@ -50,12 +50,12 @@ talisman = Talisman(app, content_security_policy=csp)
 #             reqctx.url_adapter.url_scheme = 'https'
 # app.before_request(_force_https)
 
-@app.before_request
-def before_request():
-    if not request.is_secure and app.env != "development":
-        url = request.url.replace("http://", "https://", 1)
-        code = 301
-        return redirect(url, code=code)
+# @app.before_request
+# def before_request():
+#     if not request.is_secure and app.env != "development":
+#         url = request.url.replace("http://", "https://", 1)
+#         code = 301
+#         return redirect(url, code=code)
 
 #Import Databases and User Oauth
 from baknetworks.models import db, login_manager
