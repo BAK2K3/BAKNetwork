@@ -49,6 +49,16 @@ csp = {
         '\'self\'',
         '*.googleusercontent.com',
         'w3.org'
+        'data:'
+    ],
+    'style-src': [
+        '\'self\''
+    ],
+    'connect-src': [
+        '\'self\''
+    ],
+    'font-src': [
+        '\'self\''
     ]
 }
 
