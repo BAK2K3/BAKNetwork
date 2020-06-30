@@ -48,8 +48,8 @@ csp = {
     'img-src': [
         '\'self\'',
         '*.googleusercontent.com',
-        'w3.org'
-        'data:'
+        'w3.org',
+        "data:"
     ]
     # 'style-src': [
     #     '\'self\''
