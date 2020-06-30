@@ -34,3 +34,7 @@ body {
 .table-wrapper-scroll-y {
   display: block;
 }
+
+pre.prettyprint {
+  border: none !important;
+}

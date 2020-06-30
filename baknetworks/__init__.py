@@ -28,7 +28,7 @@ app.config['PREFERRED_URL_SCHEME'] = 'https'
 #Deploy
 app.secret_key = os.environ.get('SECRET_KEY', None)
 
-#Set up FLASK HTTPS security
+#####Set up Content Security Policy##### 
 csp = {
     'default-src': [
          '\'self\'',
@@ -51,20 +51,12 @@ csp = {
         'w3.org',
         "data:"
     ]
-    # 'style-src': [
-    #     '\'self\''
-    # ],
-    # 'connect-src': [
-    #     '\'self\''
-    # ],
-    # 'font-src': [
-    #     '\'self\''
-    # ]
 }
 
+###Set up Talisman for HTTS/SSL####
 talisman = Talisman(app, content_security_policy=csp)
 
-#Set up redirects to be HTTPS for OAuth
+####Set up redirects to be HTTPS for OAuth####
 class ReverseProxied(object):
     def __init__(self, app):
         self.app = app
@@ -87,8 +79,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+###Register Google OAuth blueprint####
 app.register_blueprint(google_blueprint, url_prefix="/login")
 
+#####Connect database#####
 db.init_app(app)
 Migrate(app,db)
 
