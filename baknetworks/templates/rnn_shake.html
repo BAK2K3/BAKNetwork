@@ -43,7 +43,7 @@
 
       <hr class="my-2">
 
-      <textarea class="form-control" rows="3">{{rnnoutput}}</textarea>
+      <textarea id="#rnnoutput" class="form-control" rows="3">{{rnnoutput}}</textarea>
 
       <br>
 
@@ -130,7 +130,7 @@
 
 <script>
 
-textarea.addEventListener('textarea', () => textarea.style.width = textarea.scrollWidth);
+document.getElementById("rnnoutput").addEventListener('change', () => textarea.style.width = textarea.scrollWidth);
 
 </script>
 
