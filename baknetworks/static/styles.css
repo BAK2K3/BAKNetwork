@@ -37,11 +37,15 @@ body {
   display: block;
 }
 
-div.tarea {
-  border: 1px inset #ccc;
-  background-color: white;
-}
 
-#rnn {grid-template-columns: fit-content(500ch) fit-content(500ch) 1fr;
 
-}
+.container .text{
+    resize: none;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    height: 100%;
+    margin: -10px;
+  }
+
