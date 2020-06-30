@@ -38,3 +38,7 @@ body {
 pre.prettyprint {
   border: none !important;
 }
+
+.prettyprint {
+  border: none !important;
+}
