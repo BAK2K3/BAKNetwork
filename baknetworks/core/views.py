@@ -11,13 +11,10 @@ core = Blueprint('core',__name__)
 @core.route('/')
 def index():
 
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('core.about'))
-
     return render_template('index.html')
 
 @core.route('/about')
-@login_required
+
 def about():
     return render_template('about.html')
 
