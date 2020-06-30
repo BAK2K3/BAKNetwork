@@ -47,7 +47,8 @@ csp = {
     ],
     'img-src': [
         '\'self\'',
-        '*.googleusercontent.com'
+        '*.googleusercontent.com',
+        'w3.org'
     ]
 }
 
