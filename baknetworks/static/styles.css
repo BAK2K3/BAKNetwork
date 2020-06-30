@@ -14,9 +14,7 @@ body {
     font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
     line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
     
-    padding-bottom: 150px;
-    width: calc(100vw - 34px);
-    overflow: auto;
+    padding-bottom: 300px;
 
   }
 
@@ -39,8 +37,3 @@ body {
   display: block;
 }
 
-/* https://stackoverflow.com/questions/1417934/how-to-prevent-scrollbar-from-repositioning-web-page */
-html {
-  overflow-x: hidden;
-  /* margin-right: calc(-1 * (100vw - 100%)); */
-}
