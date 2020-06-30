@@ -37,4 +37,9 @@ body {
   display: block;
 }
 
-
+#footer { 
+  position: absolute; 
+  bottom: 0; 
+  height:50px; 
+  margin-top:2px; 
+}
