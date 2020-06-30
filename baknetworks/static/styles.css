@@ -41,3 +41,7 @@ div.tarea {
   border: 1px inset #ccc;
   background-color: white;
 }
+
+#rnn {grid-template-columns: fit-content(500ch) fit-content(500ch) 1fr;
+
+}
