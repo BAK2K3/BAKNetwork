@@ -50,16 +50,16 @@ csp = {
         '*.googleusercontent.com',
         'w3.org'
         'data:'
-    ],
-    'style-src': [
-        '\'self\''
-    ],
-    'connect-src': [
-        '\'self\''
-    ],
-    'font-src': [
-        '\'self\''
     ]
+    # 'style-src': [
+    #     '\'self\''
+    # ],
+    # 'connect-src': [
+    #     '\'self\''
+    # ],
+    # 'font-src': [
+    #     '\'self\''
+    # ]
 }
 
 talisman = Talisman(app, content_security_policy=csp)
