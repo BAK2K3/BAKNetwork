@@ -43,7 +43,7 @@
 
       <hr class="my-2">
 
-      <textarea id="#rnnoutput" class="form-control" rows="3">{{rnnoutput}}</textarea>
+      <div class="area d-flex form-control">{{rnnoutput}}</div>
 
       <br>
 
@@ -51,8 +51,12 @@
 
     </div>
     
+<!-- 
+    <hr class="my-2">
 
-    
+    <textarea id="#rnnoutput" class="form-control" rows="3">{{rnnoutput}}</textarea>
+
+    <br> -->
 
 
 
@@ -128,10 +132,5 @@
 </div>
 
 
-<script>
-
-document.getElementById("rnnoutput").addEventListener('change', () => textarea.style.width = textarea.scrollWidth);
-
-</script>
 
 {% endblock content %}

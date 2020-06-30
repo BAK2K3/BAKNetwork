@@ -37,3 +37,7 @@ body {
   display: block;
 }
 
+div.tarea {
+  border: 1px inset #ccc;
+  background-color: white;
+}
