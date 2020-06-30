@@ -64,7 +64,7 @@ csp = {
 
 talisman = Talisman(app, content_security_policy=csp)
 
-#Set up redirects to be HTTPS 
+#Set up redirects to be HTTPS for OAuth
 class ReverseProxied(object):
     def __init__(self, app):
         self.app = app
@@ -77,12 +77,12 @@ class ReverseProxied(object):
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 
 
-#Import Databases and User Oauth
+###Import Databases and User Oauth###
 from baknetworks.models import db, login_manager
 from baknetworks.users.user_oauth import google_blueprint
 
 
-####SQL Set Up####
+####SQL Set Up######
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
