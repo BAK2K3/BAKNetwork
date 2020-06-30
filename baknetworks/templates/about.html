@@ -6,8 +6,16 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-center">
             <h1 class="display-3">
-                
+                {%if current_user.is_authenticated %}
+
                 Hi {{current_user.name.split(" ")[0]}}.
+
+                {%else%}
+
+                Hi.
+
+                {%endif%}
+
              </h1>
         </div>
         
