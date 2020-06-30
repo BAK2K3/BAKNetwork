@@ -37,10 +37,6 @@ body {
   display: block;
 }
 
-pre.prettyprint {
-  border: none !important;
-}
-
-.prettyprint {
-  border: none !important;
+html {
+  overflow-y: scroll;
 }
