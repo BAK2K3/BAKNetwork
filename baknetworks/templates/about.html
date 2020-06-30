@@ -42,91 +42,80 @@
                     <p>For Christmas in 2018, my brother would only give me my Christmas present on the proviso that I could solve a mathematical logic problem.  He gave me an email address, and that the gift was on the email account. I just had to guess the password, using python, with the following hint: </p>
                     
                     <pre class="prettyprint">
-print("My password is the first prime number which contains at least 5 sevens...") 
+    print("My password is the first prime number which contains at least 5 sevens...") 
                     </pre>
 
                     <p>While I’d never used python before, having had more experience in C than anything else, I was excited to be set a task that required learning the syntax of a new language, and I didn’t realise just how much this would reignite my passion for programming.</p>
                     
                     <pre class="prettyprint">
-flag = False
-primeFlag = 0
-z = 10000000000000000
-x = 0
-y = 700000
-n = 0
-counter = 0
+    flag = False
+    primeFlag = 0
+    z = 10000000000000000
+    x = 0
+    y = 700000
+    n = 0
+    counter = 0
 
-while (flag == False):
+    while (flag == False):
 
-primeFlag = 0
-for i in range (2, y):
-    if (y % i) == 0:
-        primeFlag = primeFlag +1  
-        if (primeFlag >0):
-            break
-    
-if (primeFlag == 0):
-    print (str(y)+ " - Prime")
-    for s in list(str(y)):
-        if (s == "7"):
-            counter = (counter + 1)
+    primeFlag = 0
+    for i in range (2, y):
+        if (y % i) == 0:
+            primeFlag = primeFlag +1  
+            if (primeFlag >0):
+                break
+        
+    if (primeFlag == 0):
+        print (str(y)+ " - Prime")
+        for s in list(str(y)):
+            if (s == "7"):
+                counter = (counter + 1)
 
-    if (counter == 5):
-        print (str(y)+ " is the first prime number with at least 5 7's in!")
-        flag = True
-        exit()
-    
+        if (counter == 5):
+            print (str(y)+ " is the first prime number with at least 5 7's in!")
+            flag = True
+            exit()
+        
+        else:
+            flag = False
+            y = (y+1)
+            counter = 0            
+
     else:
-        flag = False
-        y = (y+1)
-        counter = 0            
-
-else:
-    y = (y+1)                    
+        y = (y+1)                    
                     </pre>
-                    
+                    <pre class="prettyprint">
+    727777 is the first prime number with at least 5 7's in!
+                    </pre>
+
                     <p>While it had taken me all of Christmas day, cornered in the conservatory being force fed mince pies and cider, I’d finally done it. And got access to an email address containing multiple CD keys for games. But the truth of the matter was that the real gift my brother had given me was the reignition for my love of programming and problem solving.</p> 
                     
                     <p>In September 2019, my wife reduced her hours at work and took on the LPC (Legal Practice Course) full time. Alongside her, while still working full time, I decided to start from the ground up and enrolled in Harvard’s CS50 – Introduction to Computer Science. On Christmas Eve, 2019, I submitted my final project for CS50 – CS50RPG, and subsequently received my verified EdX certificate.</p>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p><img src="{{ url_for('static', filename='cs50.jpg')}}"  class="img-fluid text-center"></p>
-                        </div>
-                    </div>
+                    
+                    <p><img src="{{ url_for('static', filename='cs50.jpg')}}"  class="img-fluid text-center"></p>
+                     
                     
                     <p>Having explored python in much more depth in CS50, I knew this was my language of choice going forward. So, in January 2020, I started a course on Udemy for Python, Data Science, and Machine Learning. The course included topics on statistics that were far beyond the scope of my mathematical capabilities, so between January and March, the majority of the time that I spent studying for this course was reading <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/"> An Introduction to Statistical Learning </a>.</p> 
                     
                     <p>Then lockdown hit. In April 2020, the contract I was on was suspended, and I was furloughed indefinitely. This was the best time for me to completely focus on furthering my knowledge, completing as many courses as I could, and building a portfolio to demonstrate my capabilities. My wife was still completing her LPC, so together we spent over 3 months studying 7 days a week.  Shortly into the lockdown, I completed the Data Science and Machine Learning course.</p> 
 
-                    <div class="row">
-                        <div class="col-md-4">
+                    
                     <p><img src="{{ url_for('static', filename='datascience.jpg')}}"  class="img-fluid text-center"></p>
-                        </div>
-                    </div>
+                    
                     <p>One of the final chapters in this course covered Neural Networks with TensorFlow, and I found myself enthralled with the topic, and spent a lot of time experimenting with the small areas covered during the course and externally researching wider concepts. Given my interest in Neural Networks, I decided to enrol in a course specifically for Deep Neural Networks with TensorFlow.</p> 
                     
                     <p>Within a month I’d completed the course, and one of the final aspects was deploying a simple Neural Network via Flask. I remember thinking – This would be a great way of showcasing what I’ve learned. But with such a shallow knowledge of web design and full stack development, I thought it would be beneficial to take an additional course on Flask, and web design, to really make the most out of the experience and to present the best possible user experience as part of my portfolio.</p> 
 
-                    <div class="row">
-                        <div class="col-md-4">
+                    
                     <p><img src="{{ url_for('static', filename='tensorflow.jpg')}}"  class="img-fluid text-center"></p>
-                        </div>
-                    </div>
+                        
                     <p>The final course, which I completed at the beginning of June 2020, was exactly that. A Python and Flask bootcamp for web development. Armed with what I thought was a sufficient arsenal to deploy my first project to the web, a stateful Recurrent Neural Network for Natural Language Processing, I started work on the portfolio, thinking <em>“This isn’t going to be that difficult, is it?”</em></p>
                    
-                    <div class="row">
-                        <div class="col-md-4">
+                 
                     <p><img src="{{ url_for('static', filename='flask.jpg')}}"  class="img-fluid text-center"></p>
-                        </div>
-                    </div>
-         
-         
-         
-         
-         
-         
-         
+                    
+                       
          
                 </div>
             </div>
