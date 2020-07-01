@@ -35,53 +35,36 @@
                 {{rnnform.hidden_tag()}}
                 {{rnnform.textrnn(class="form-control bg-light border border-light")}}
                 <br>
-
                 <div class='row'>
-
                     <div class='col-2'>
-
-                            {{rnnform.temprnn.label(class='h6')}}
-                        
+                            {{rnnform.temprnn.label(class='h6')}}                        
                     </div>
-
                     <div class='col-8'>
-
-                        <div class='container-fluid'>
-
-                            <input type="range" min="1" max="200" value="100" class="form-control-range" id="myRange">
-                        
+                        <div class='container'>
+                            <input type="range" min="1" max="200" value="100" class="form-control-range" id="myRange">                       
                         </div>
-
                     </div>
-
                     <div class='col-2'>
                             {{rnnform.temprnn(class="form-control bg-light border border-light text-center")}}
-                    </div>
-                
+                    </div>                
                 </div>
 
                 <hr class="my-2">
 
-
                 {{rnnform.submitrnn(class="btn btn-secondary mb-2")}}   
             </div>
-
-        </div>
-        
+        </div>        
     </form>
 
-      {% if rnnoutput %}
+    {% if rnnoutput %}
 
-      <hr class="my-2">
-
+    <hr class="my-2">
         
     <textarea class="form-control" rows="15">{{rnnoutput}}</textarea>
       
-
     <br> 
       
-
-      {%endif%}
+    {%endif%}
 
     </div>
     

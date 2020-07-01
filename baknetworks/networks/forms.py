@@ -11,5 +11,5 @@ from baknetworks.models import User
 class RNNForm(FlaskForm):
 
     textrnn = StringField('Input Text', validators=[DataRequired()])
-    temprnn = IntegerField(label='Temperature (%)', validators=[DataRequired(), NumberRange(1, 200)])
+    temprnn = IntegerField(label='Temp (%)', validators=[DataRequired(), NumberRange(1, 200)])
     submitrnn = SubmitField('Generate') 
