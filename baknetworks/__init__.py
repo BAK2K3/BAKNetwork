@@ -44,6 +44,7 @@ csp = {
     'script-src': [
         '\'self\'',
         '\'sha256-BflWde4WMQhZn92hsMAcfDW8j8zd1B5BddzYRCRtG/I=\'',
+        '\'sha256-qfLCGFNuB1mFCyjMIyTWmW7cu+665cG6xF+BMDOcSUw=\'',
         'cdn.jsdelivr.net',
         'code.jquery.com',
         'stackpath.bootstrapcdn.com',
