@@ -51,22 +51,28 @@ body {
 h1 {font-size:1rem;} /*1rem = 16px*/
 h2 {font-size:0.8rem;}
 h3 {font-size:0.6rem;}
+.h1 {font-size:1rem;} /*1rem = 16px*/
+.h2 {font-size:0.8rem;}
+.h3 {font-size:0.6rem;}
 
-display-1 {font-size:2.5rem;}
-display-2 {font-size:1.5rem;}
-display-3 {font-size:0.8rem;}
-display-4 {font-size:0.5rem;}
+.display-1 {font-size:2.5rem;}
+.display-2 {font-size:1.5rem;}
+.display-3 {font-size:0.8rem;}
+.display-4 {font-size:0.5rem;}
 
 /* Small devices (landscape phones, 544px and up) */
 @media (min-width: 544px) {  
   h1 {font-size:1.5rem;} /*1rem = 16px*/
   h2 {font-size:1rem;}
   h3 {font-size:0.8rem;}
+  .h1 {font-size:1.5rem;} /*1rem = 16px*/
+  .h2 {font-size:1rem;}
+  .h3 {font-size:0.8rem;}
 
-  display-1 {font-size:3rem;}
-  display-2 {font-size:2rem;}
-  display-3 {font-size:1.2rem;}
-  display-4 {font-size:0.8rem;}
+  .display-1 {font-size:3rem;}
+  .display-2 {font-size:2rem;}
+  .display-3 {font-size:1.2rem;}
+  .display-4 {font-size:0.8rem;}
 
   body {font-size:0.9rem;}
 
@@ -77,11 +83,14 @@ display-4 {font-size:0.5rem;}
   h1 {font-size:2rem;} /*1rem = 16px*/
   h2 {font-size:1.5rem;}
   h3 {font-size:1rem;}
+  .h1 {font-size:2rem;} /*1rem = 16px*/
+  .h2 {font-size:1.5rem;}
+  .h3 {font-size:1rem;}
 
-  display-1 {font-size:3.5rem;}
-  display-2 {font-size:2.5rem;}
-  display-3 {font-size:1.5rem;}
-  display-4 {font-size:1.2rem;}
+  .display-1 {font-size:3.5rem;}
+  .display-2 {font-size:2.5rem;}
+  .display-3 {font-size:1.5rem;}
+  .display-4 {font-size:1.2rem;}
 
   body {font-size:1rem;}
 }
@@ -91,11 +100,14 @@ display-4 {font-size:0.5rem;}
   h1 {font-size:2.5rem;} /*1rem = 16px*/
   h2 {font-size:2rem;}
   h3 {font-size:1.5rem;}
+  .h1 {font-size:2.5rem;} /*1rem = 16px*/
+  .h2 {font-size:2rem;}
+  .h3 {font-size:1.5rem;}
 
-  display-1 {font-size:4rem;}
-  display-2 {font-size:3rem;}
-  display-3 {font-size:1.8rem;}
-  display-4 {font-size:1.5rem;}
+  .display-1 {font-size:4rem;}
+  .display-2 {font-size:3rem;}
+  .display-3 {font-size:1.8rem;}
+  .display-4 {font-size:1.5rem;}
 
   body {font-size:1.1rem;}
 }
@@ -106,10 +118,10 @@ display-4 {font-size:0.5rem;}
   h2 {font-size:2.5rem;}
   h3 {font-size:2rem;}
 
-  display-1 {font-size:4.5rem;}
-  display-2 {font-size:3.5rem;}
-  display-3 {font-size:2rem;}
-  display-4 {font-size:1.7rem;}
+  .display-1 {font-size:4.5rem;}
+  .display-2 {font-size:3.5rem;}
+  .display-3 {font-size:2rem;}
+  .display-4 {font-size:1.7rem;}
 
   body {font-size:1.2rem;}
   
