@@ -65,7 +65,7 @@ def rnn_shake():
 
         start_seed = rnnform.textrnn.data
         gen_size = 500
-        temp = rnn.temprnn.data/100
+        temp = rnnform.temprnn.data/100
         filename='shakespeare'
 
         rnnoutput = generate_text(start_seed, gen_size, temp, filename)
