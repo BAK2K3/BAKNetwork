@@ -132,4 +132,19 @@
     </div>
 </div>
 
+
+<script> 
+
+    var slider = document.getElementById("myRange");
+    var tempoutput = document.getElementById("temprnn") 
+    tempoutput.value = slider.value; // Display the default slider value
+    
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+        tempoutput.value = this.value;
+    }
+    
+    </script>
+    
+
 {% endblock content %}
