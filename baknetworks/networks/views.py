@@ -46,9 +46,9 @@ def rnn_root():
 def rnn_shake():
 
     # RNN Form
-    rnnform = RNNForm()
+    rnnform = RNNForm(prefix='a')
     # Comment Form
-    commentform = CommentForm()
+    commentform = CommentForm(prefix='b')
 
     rnnoutput=False
 
@@ -85,10 +85,10 @@ def rnn_shake():
 def rnn_tolstoy():
 
    # RNN Form
-    rnnform = RNNForm()
+    rnnform = RNNForm(prefix='a')
 
     # Comment Form
-    commentform = CommentForm()
+    commentform = CommentForm(prefix='b')
 
     rnnoutput=False
 
@@ -126,7 +126,7 @@ def rnn_tolstoy():
 def gan():
     
     # Comment Form
-    commentform = CommentForm()
+    commentform = CommentForm(prefix='a')
     if commentform.validate_on_submit():
         savecomment = Comment(text=commentform.text.data,
                             user_id=current_user.id,
