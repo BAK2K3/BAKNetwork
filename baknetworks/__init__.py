@@ -4,7 +4,9 @@
 import os
 
 #Testing only
-#os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
+
+
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = 'true'
 port = int(os.environ.get("PORT", 5000))
 
@@ -24,7 +26,7 @@ app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 
 #Dev
-#app.config.from_json('config.json')
+# app.config.from_json('config.json')
 #Deploy
 app.secret_key = os.environ.get('SECRET_KEY', None)
 
@@ -41,9 +43,11 @@ csp = {
     ],
     'script-src': [
         '\'self\'',
+        '\'sha256-BflWde4WMQhZn92hsMAcfDW8j8zd1B5BddzYRCRtG/I=\'',
         'cdn.jsdelivr.net',
         'code.jquery.com',
-        'stackpath.bootstrapcdn.com'
+        'stackpath.bootstrapcdn.com',
+        
     ],
     'img-src': [
         '\'self\'',

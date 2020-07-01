@@ -10,9 +10,9 @@ body {
 
     font-family: 'Rubik', sans-serif;
 
-    /* https://css-tricks.com/books/fundamental-css-tactics/scale-typography-screen-size/ */
+    /* https://css-tricks.com/books/fundamental-css-tactics/scale-typography-screen-size/
     font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
-    line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
+    line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300))); */
     
     padding-bottom: 100px;
 
@@ -37,8 +37,49 @@ body {
   display: block;
 }
 
-#footer { 
-  bottom: 0; 
-  height:50px; 
-  margin-top:2px; 
+.slidecontainer {
+  width: 100%;
+}
+
+
+.slider{
+  width: auto;
+  display: inline-block;
+}
+
+
+h1 {font-size:1rem;} /*1rem = 16px*/
+h2 {font-size:0.8rem;}
+h3 {font-size:0.6rem;}
+
+/* Small devices (landscape phones, 544px and up) */
+@media (min-width: 544px) {  
+  h1 {font-size:1.5rem;} /*1rem = 16px*/
+  h2 {font-size:1rem;}
+  h3 {font-size:0.8rem;}
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {  
+  h1 {font-size:2rem;} /*1rem = 16px*/
+  h2 {font-size:1.5rem;}
+  h3 {font-size:1rem;}
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+  h1 {font-size:2.5rem;} /*1rem = 16px*/
+  h2 {font-size:2rem;}
+  h3 {font-size:1.5rem;}
+
+  
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+  h1 {font-size:3rem;} /*1rem = 16px*/    
+  h2 {font-size:2.5rem;}
+  h3 {font-size:2rem;}
+
+  
 }

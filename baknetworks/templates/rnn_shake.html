@@ -31,12 +31,43 @@
 
     <form method="POST">
         <div class='container pt-4'>
-        <div class="form-group">
-            {{rnnform.hidden_tag()}}
-            {{rnnform.textrnn(class="form-control bg-light border border-light")}}
-            <br>
-            {{rnnform.submitrnn(class="btn btn-secondary mb-2")}}   
-      </div>
+            <div class="form-group">
+                {{rnnform.hidden_tag()}}
+                {{rnnform.textrnn(class="form-control bg-light border border-light")}}
+                <br>
+
+                <div class='row'>
+
+                    <div class='col-2'>
+
+                            {{rnnform.temprnn.label(class='h6')}}
+                        
+                    </div>
+
+                    <div class='col-8'>
+
+                        <div class='container-fluid'>
+
+                            <input type="range" min="1" max="200" value="100" class="form-control-range" id="myRange">
+                        
+                        </div>
+
+                    </div>
+
+                    <div class='col-2'>
+                            {{rnnform.temprnn(class="form-control bg-light border border-light text-center")}}
+                    </div>
+                
+                </div>
+
+                <hr class="my-2">
+
+
+                {{rnnform.submitrnn(class="btn btn-secondary mb-2")}}   
+            </div>
+
+        </div>
+        
     </form>
 
       {% if rnnoutput %}
@@ -135,5 +166,17 @@
 </div>
 
 
+<script> 
+
+var slider = document.getElementById("myRange");
+var tempoutput = document.getElementById("temprnn") 
+tempoutput.value = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+    tempoutput.value = this.value;
+}
+
+</script>
 
 {% endblock content %}
