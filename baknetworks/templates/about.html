@@ -122,8 +122,6 @@
                  
                     <p><img src="{{ url_for('static', filename='flask.jpg')}}"  class="img-fluid text-center"></p>
                     
-                       
-         
                 </div>
             </div>
         </div>
@@ -140,7 +138,201 @@
       </div>
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordianDev">
         <div class="card-body">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+
+          <p><strong>01/07/2020</strong></p>
+
+          <p><em>TL;DR – Deploying a stateful Neural Network was indeed, extremely difficult.</em>T</p> 
+
+          <p>When initially planning my portfolio, I had huge prospects for what I wanted to demonstrate; most importantly, I’d hoped all my Neural Networks would be interactive in order for users to understand their application. The scope of my portfolio included Recurrent Neural Networks, Generative Adversarial Networks, and Convolutional Neural Networks. All of which, I wanted to be interactive. </p>
+          
+          <p>The first fully developed Network I’d created through the Tensorflow course which was accessible, relatable, and interactive, was a <a href='https://www.tensorflow.org/tutorials/text/text_generation'>“Shakespeare Bot”</a>. Given the simple and available nature of this model, I attempted a much “deeper” network using Tolstoy’s War and Peace, and named is “Tolstoybot”. Both of these were ready prior to starting the development of the website, and so deploying these models seemed the best place to start. </p>
+          
+          <p>The website started off simple, with a welcome page, and a separate page for the bots. I tested them out locally on Flask, and they seemed to work out of the box. The model was hosted locally on my computer, as part of the website, and the function for obtaining predicted text worked as intended:</p>
+          
+          <pre class="prettyprint">         
+  #Test function for generating consecutive text
+  def generate_text(model,start_seed,num_generate=500,temperature=1):
+      
+      #Map each character in start_seed to it's relative index
+      input_eval = [char_to_ind[s] for s in start_seed]
+      
+      #Expand the dimensions
+      input_eval = tf.expand_dims(input_eval, 0)
+      
+      #Create empty list for generated text
+      text_generated = []
+      
+      #Reset the states of tyhe model        
+      model.reset_states()
+      
+      #for each iteration of num_generate
+      for i in range(num_generate):
+          
+          #Obtain probability matrix for current iteration 
+          predictions = model(input_eval)
+          
+          #Reduce dimensions
+          predictions = tf.squeeze(predictions,0)
+          
+          #Multiply probabily matrix by temperature
+          predictions = predictions/temperature
+          
+          #Select a random outcome, based on the unnormalised log-probabilities produced by the model
+          predicted_id = tf.random.categorical(predictions, num_samples=1)[-1,0].numpy()
+          
+          #Expand dimensions of prediction and assign as next input evaluation
+          input_eval = tf.expand_dims([predicted_id], 0)
+          
+          #Convert prediction to char and append to generated list of text
+          text_generated.append(ind_to_char[predicted_id])
+          
+      #return the initial input, concatenated with the generated text. 
+      return(start_seed+"".join(text_generated))</pre>
+          
+          <p>Feeling like I was ready to conquer the world, I set up an account on Heroku, made a new application, and pushed my git to the Heroku master channel.</p> 
+          
+          <pre class="prettyprint">
+  Compiled slug size: 750M is too large (max is 500M)</pre>
+
+          <p><strong>Oh.</strong>So it turns out that TensorFlow is too big for Heroku. Given showcasing my capabilities with TensorFlow was one of the most important intentions of the portfolio, I’d immediately hit a brick wall. I needed to research workarounds to the size of TensorFlow, and how to deploy these via Flask and Heroku. <a href='https://www.tensorflow.org/lite'>TFLite</a> was one of the first solutions I’d found for a more portable version of TensorFlow, but this is primarily designed for mobile applications by the looks of things, so was outside of the scope of what I was currently capable of doing. After a little while I stumbled upon a conference talk by a Google employee, about <a href='https://www.youtube.com/watch?v=4mqFDwIdKh0'>TensorFlow Serving</a>. The initial discussion of containers and docker was a little overwhelming, but the pure concept of it was amazing. Essentially, you deploy the model to a container, and use REST API to communicate with the container (i.e send input, receive output). This solution would potentially allow me to completely remove TensorFlow from my python environment, and would therefore substantially reduce the slug size permitted by Heroku. Let’s give it a whirl.</p> 
+          
+          <p>I took a little tutorial on Docker, enabled virtualisation on my Windows based computer, installed Windows Subsystem for Linux, finished the “getting started” Docker exercise and I was ready to go.   After a couple of runs of trial and error, I’d managed to locally host two models in the same container.</p>
+          
+          <pre class="prettyprint">
+  model_config_list {
+      config {
+          name: "shakesbot",
+          base_path: "/models/shakesbot",
+          model_platform: "tensorflow"
+      }
+      config {
+          name: "tolstoybot",
+          base_path: "/models/tolstoybot",
+          model_platform: "tensorflow"
+      }
+  }</pre>
+
+          <pre class="prettyprint">
+          docker run -p 8501:8501 -p 8500:8500`
+  --mount type=bind,source='{PATH}\Saved_Models\Shakesbot',target=/models/shakesbot/1 
+  --mount type=bind,source='{PATH}\Saved_Models\Tolstoybot',target=/models/tolstoybot/1 
+  --mount type=bind,source='{PATH}\model_config.config',target=/models/model_config.config 
+  -t tensorflow/serving 
+  --model_config_file=/models/model_config.config</pre>
+          
+          <p>With the model now hosted on a container, albeit locally, I needed to rewrite my function to work with RESTful communication between the website and the container.</p>
+          
+          <pre class="prettyprint">
+  #Create REST Function for Docker Container
+  def generate_text_JSON(start_seed,num_generate=500,temperature=1):
+        
+      #Map each character in start_seed to it's relative index
+      input_eval = [char_to_ind[s] for s in start_seed]
+      
+      #Expand the dimensions
+      input_eval = tf.expand_dims(input_eval, 0)
+        
+      #Create empty list for generated text
+      text_generated = []
+      
+      #Define headers for RESTful communication
+      headers = {"content-type": "application/json"}
+      
+      #Commented out, as the model is no longer being passed as a parameter  
+      #model.reset_states()
+      
+      for i in range(num_generate):
+          
+          #Package the current iteration into an iterable json data dump
+          data = json.dumps({"signature_name": "serving_default", "instances": input_eval.numpy().tolist()})
+          
+          #Obtain response from container through RESTful communication 
+          json_response = requests.post('http://localhost:8501/v1/models/shakesbot:predict',data=data, headers=headers)
+          
+          #Extract probability matrix for current iteration from Json response
+          predictions = json.loads(json_response.text)
+                  
+          #Reduce dimensions
+          predictions = tf.squeeze(predictions['predictions'],0)
+          
+          #Multiply probabily matrix by temperature
+          predictions = predictions/temperature
+          
+          #Select a random outcome, based on the unnormalised log-probabilities produced by the model
+          predicted_id = tf.random.categorical(predictions, num_samples=1)[-1,0].numpy()
+          
+          #Expand dimensions of prediction and assign as next input evaluation
+          input_eval = tf.expand_dims([predicted_id], 0)
+          
+          #Convert prediction to char and append to generated list of text
+          text_generated.append(ind_to_char[predicted_id])
+          
+      #return the initial input, concatenated with the generated text. 
+      return(start_seed+"".join(text_generated))</pre>
+
+          <p>This took a great deal of work: learning about REST APIs, RESTful communication, JSON formatted data, deciphering and fully understanding the context of the initial function, and plenty of assistance from the trusty StackOverflow. But I’d overcome this hurdle. I was now locally hosting two aspects of the portfolio separately.</p>
+          
+          <p>Looking back at the function I’d created to generate text, though, I realised that there were a handful of functions which were inherited from TensorFlow. Given the nature of the transition from TensorFlow to TensorFlow Serving, I needed to try and remove all reference to TensorFlow within this function in order to push an environment to Heroku without TensorFlow being part of it. These were the functions that needed changing:</p>
+          
+          <pre class="prettyprint">
+  #Dimension Expansion
+  tf.expand_dims
+
+  #Dimension Reduction 
+  tf.squeeze
+
+  #Randomly selecting an outcome based on unnormalized log-probabilities 
+  #tf.random.categorical</pre>
+          
+          <p>The first two were straightforward with near identical NumPy functions:</p>
+          
+          <pre class="prettyprint">
+  #Dimension Expansion
+  np.expand_dims
+
+  #Dimension Reduction 
+  np.squeeze</pre>
+          
+          
+          <p>The next function, for random selection based on unnormalized log-probabilities, resulting in me going back the drawing board of understanding some fundamentals of statistics and probabilities. In an ideal world, NumPy would have an inbuilt function similar to Dimension Expansion and Reduction, but unfortunately the implementation of such a feature wasn’t considered a priority due to it’s <a href='https://github.com/numpy/numpy/issues/15201?fbclid=IwAR04s9NppTpPZjYNnX2_nPJuGSxUgrGT5tPZ8GAL7bNUoMBdI5H_OnOOGxc'>niche nature</a>. The closest function I could find was:</p>
+          
+          <pre class="prettyprint">
+  np.random.choice</pre>
+
+          <p>However, the probability distributions had to be normalised, and have a sum of 1. With some mathematical assistance of my aforementioned brother, I was able to perform such a transformation on the probability matrix using the following simple function:</p>
+          
+          <pre class="prettyprint">
+  #Function for calculating the exponential of the array, and normalising probability distribution
+  def exp_normalize(x):
+      y = np.exp(x)
+      return y / y.sum()</pre>
+
+          <p>Then, when making the random selection within the function, I could call the following:</p>
+          
+          <pre class="prettyprint">
+  #Select a random outcome, based on the unnormalised log-probabilities produced by the model
+  predicted_id = np.random.choice(vocab_size, p=exp_normalize(predictions))</pre>
+          
+          <p>And voila, I’d done it. The function for generating text from the model no longer required TensorFlow, and I was one step closer to being able to deploy the initial concept for the portfolio. I ported all of the code over to Flask, however as I was cleaning it up and removing any redundancies, I came across one of the functions I’d initially commented out when first attempting RESTful communication to the containerised model.</p>
+  
+          <pre class="prettyprint">
+  #resetting the internal states of the model  
+  #model.reset_states()</pre>
+
+          <p><em>So close, yet so far.</em> Let’s quickly discuss Recurrent Neural Networks, and what it means for them to be stateful. The nature of RNNs is that they retain information from their previous calculations, allowing their outputs to be impacted by previous inputs. That’s how they’re recurrent. So for example if I were to input a start seed of “He”, the model will be more likely to subsequently produce male orientated language, given the probabilities going forward will be biased towards male contextualised language. On this basis, from the first function detailed above, before making any new predictions/generations of text, the models states need to be “reset”, so that it has no prior influence or retained knowledge of any previous predictions. The ability to reset a model’s states in between predictions was a fundamental necessity, and without the ability to do this, the internal states would continue to stack, and would no longer accurately represent the individual context of each prediction.</p>
+          
+          <p>Given TensorFlow Serving uses RESTful communication, it is extremely limited in the instructions that can be sent and received via models being served on a container. In essence, out of the box TF Serving only allows the request for a “prediction” based on an input; without any extensive knowledge TF Serving’s infrastructure, given it’s extensive <a href='https://www.tensorflow.org/tfx/serving/api_docs/cc/class/tensorflow/serving/server-core'>API Docs</a>, there was no easy solution to this. I’d found a feature request <a href='https://github.com/tensorflow/serving/issues/724'>from 2008</a> which had little traction, with the only real solution or suggestion being to build a custom binary for TF Serving’s ServerCore. I took to <a href='https://www.reddit.com/r/tensorflow/comments/hfhwwm/how_to_reset_rnn_model_states_of_a_model_being/'>Reddit</a>, and I took to <a href='https://stackoverflow.com/questions/62570483/how-to-reset-rnn-model-states-of-a-model-being-served-on-docker'>StackOverflow</a>, but to no avail.</p> 
+          
+          <p>I had to accept defeat. I was now treading in the deep waters of the unknown and came to the conclusion that whilst this is an extremely exciting and interesting development in terms of deploying Neural Networks for production, I wasn’t yet capable of embarking on this journey. I had to scrap the idea of using TensorFlow Serving, and I had to find an alternative solution.</p>
+          
+          <p>Whilst doing my initial research into overcoming the issue with the slug size for Heroku, I came across an alternative build of TensorFlow which only utilises the CPU. Given all the models I’d previously made were trained via a CUDA GPU (NVidia 1080Ti), I was hesitant to try and deploy a model which only utilises a CPU, given the training times themselves went from 60 seconds per epoch to 15 minutes per epoch when swapping between GPU and CPU. But at this stage, I felt like I was moving in reverse, and decided that functionality was a priority over performance.</p> 
+          
+          <pre class="prettyprint">
+  Warning: Your slug size (406 MB) exceeds our soft limit (300 MB) which may affect boot time.</pre>
+
+          <p>While the prospect of a slow performing Neural Network was diminishing my excitement for the finished product, the above warning when deploying the environment to Heroku with TensorFlow-CPU was music to my ears. The models were finally functional, and were deployed online. The Shakesbot had an approximate return time of 6 seconds, and the Tolstoybot had an approximate return time of 15 seconds. Ultimately, while this is significantly slower than when running locally on a GPU based environment (1 second and 3 seconds respectively), the realisation dawned on me that the functionality was absolutely a priority, and that improvements could no doubt be made down the line to improve the performance if need be. </p>
+          
+
         </div>
       </div>
     </div>
