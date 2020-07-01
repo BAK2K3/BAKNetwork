@@ -43,8 +43,8 @@ csp = {
     ],
     'script-src': [
         '\'self\'',
-        '\'sha256-BflWde4WMQhZn92hsMAcfDW8j8zd1B5BddzYRCRtG/I=\'',
-        '\'sha256-qfLCGFNuB1mFCyjMIyTWmW7cu+665cG6xF+BMDOcSUw=\'',
+        '\'sha256-hiwDPNhsIbfBqHeUAiBkfuGzaQAWxVx1sIFuSOA/A3M=\'',
+        '\'sha256-km/e8rf92a5m6UdebHyfOamTMnsk/gCqVP1QCBMQqpI=\'',
         'cdn.jsdelivr.net',
         'code.jquery.com',
         'stackpath.bootstrapcdn.com',
