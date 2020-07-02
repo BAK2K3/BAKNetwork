@@ -146,7 +146,9 @@ def cnn_covid():
         filename = secure_filename(cnnform.filecnn.data.filename)
         
         #Set Filepath
-        filepath = url_for('static', filename=filename)
+        # filepath = url_for('static', filename=filename)
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        filepath = os.path.join(basedir,'static', filename)
 
         #Save file
         cnnform.filecnn.data.save(filepath)
