@@ -182,7 +182,7 @@ def cnn():
 @networks.route('/gan', methods=['GET', 'POST'])
 def gan():
     
-    #Create Commen Form Instance
+    #Create Comment Form Instance
     commentform = CommentForm(prefix='a')
 
     #If Comment form has been submitted

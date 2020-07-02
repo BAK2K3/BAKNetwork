@@ -2,22 +2,27 @@
 
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
-from PIL import Image
+# from PIL import Image
 import tensorflow as tf
 from flask import url_for, current_app
 import numpy as np
 import os
 
+#Function for preparing data depending on RNN Chosen
 def prepare_network(filename):
-    #Dev
-    # path_to_file = os.path.join(current_app.root_path, "static\models\\", filename+"".join('.txt'))
-    #Deploy
+    #Sets filepath for the corpus of text 
     path_to_file = os.path.join(current_app.root_path, "static/models/", filename+"".join('.txt'))
+    #Open Text File
     text = open(path_to_file, 'r', encoding='utf-8').read()
+    #Obtain set of vocabulary
     vocab = sorted(set(text))
+    #Create a character index (forwards and backwards)
     char_to_ind = {char:ind for ind, char in enumerate(vocab)}
     ind_to_char = np.array(vocab)
+    #Return both mappings  
     return char_to_ind, ind_to_char
+
+
 
 def generate_text(start_seed,gen_size=500,temp=1, filename='shakespeare'):
 
