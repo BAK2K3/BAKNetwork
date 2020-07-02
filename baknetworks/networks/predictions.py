@@ -1,6 +1,7 @@
 ##Predictions.py in Networks##
 
 from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
 import tensorflow as tf
 from flask import url_for, current_app
 import numpy as np
@@ -58,4 +59,6 @@ def generate_text(start_seed,gen_size=500,temp=1, filename='shakespeare'):
 
 #     model = load_model(os.path.join(current_app.root_path, "static/models/covid_detector.h5"), compile=False)
 
-#     filepath=
+    #   input_image = image.load_img(filename,target_size=(256,256,3))
+    #   predictions = model.predict(input_image)
+    #   return predictions
