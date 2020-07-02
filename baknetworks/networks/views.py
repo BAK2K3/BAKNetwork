@@ -48,22 +48,24 @@ def rnn_shake():
     #If RNN form has been submitted 
     if rnnform.submitrnn.data and rnnform.validate():
 
-        #Extract Form data
+        #Extract RNN Form data
         start_seed = rnnform.textrnn.data
-        gen_size = 500
         temp = rnnform.temprnn.data/100
         filename='shakespeare'
 
         #Pass Form Data to Shakesbot text generation
         rnnoutput = generate_text(start_seed, gen_size, temp, filename)
         
-        #Filter 
+        #Filter comment data for this page
         commentquery = Comment.query.filter_by(page='rnn_shake').all()
+
+        #Return Relevant Information to page
         return render_template('rnn_shake.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform, rnnoutput=rnnoutput)
     
   
-    
+    #Filter comment data for this page
     commentquery = Comment.query.filter_by(page='rnn_shake').all() 
+    #Return Relevant Information to page
     return render_template('rnn_shake.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform)
 
  
@@ -71,39 +73,46 @@ def rnn_shake():
 @networks.route('/rnn/tolstoybot', methods=['GET', 'POST'])
 def rnn_tolstoy():
 
-   # RNN Form
+    #Create RNN Form Instance
     rnnform = RNNForm(prefix='a')
 
-    # Comment Form
+    #Create Comment Form Instance
     commentform = CommentForm(prefix='b')
 
+    #Set default rnnoutput to False
     rnnoutput=False
 
-
+    #If Comment form has been submitted
     if commentform.submit.data and commentform.validate():
+        #Extract Comment data from form
         savecomment = Comment(text=commentform.text.data,
                             user_id=current_user.id,
-                            page='rnn_tolstoy')       
+                            page='rnn_tolstoy')    
+        #Save and Commit Comment data to Database    
         db.session.add(savecomment)
         db.session.commit()
         return redirect(url_for('networks.rnn_tolstoy'))
 
+    #If RNN form has been submitted 
     if rnnform.submitrnn.data and rnnform.validate():
-
+        #Extract RNN Form data
         start_seed = rnnform.textrnn.data
-        gen_size = 500
-        temp = 1
+        temp = rnnform.temprnn.data/100
         filename='tolstoybot'
-
+        
+        #Pass Form Data to Tolstoybot text generation
         rnnoutput = generate_text(start_seed, gen_size, temp, filename)
         
+        #Filter comment data for this page
         commentquery = Comment.query.filter_by(page='rnn_tolstoy').all()
+        #Return Relevant Information to page
         return render_template('rnn_tolstoy.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform, rnnoutput=rnnoutput)
     
 
     
-    
+    #Filter comment data for this page
     commentquery = Comment.query.filter_by(page='rnn_tolstoy').all()
+    #Return Relevant Information to page
     return render_template('rnn_tolstoy.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform)
 
 
