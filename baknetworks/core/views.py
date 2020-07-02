@@ -13,10 +13,10 @@ def index():
 
     return render_template('index.html')
 
-@core.route('/about')
+@core.route('/devdiary')
 
 def about():
-    return render_template('about.html')
+    return render_template('devdiary.html')
 
 @core.route('/contact')
 @login_required
