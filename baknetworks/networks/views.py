@@ -126,7 +126,7 @@ def cnn_covid():
         filepath = os.path.join(current_app.root_path, "static/models/", filename)
 
         cnnoutput = detect_covid(filepath)
-        
+                
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
     
@@ -135,7 +135,7 @@ def cnn_covid():
     
     commentquery = Comment.query.filter_by(page='cnn_covid').all()
 
-    return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnforn, cnnoutput=cnnoutput)
+    return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
 
 
 
