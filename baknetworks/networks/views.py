@@ -126,10 +126,10 @@ def cnn_covid():
 
     
         #Obtain Filename
-        filename = secure_filename(cnnform.fileccn.data.filename)
+        filename = secure_filename(cnnform.filecnn.data.filename)
         
         #Obtain Filepath
-        filepath = os.path.join(current_app.root_path, "static/xray/", filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         # filepath = os.path.join(current_app.root_path, "static/xray/", filename)
         #Save file
         cnnform.filecnn.data.save(filepath)

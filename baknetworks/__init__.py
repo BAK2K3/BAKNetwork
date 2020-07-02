@@ -23,6 +23,7 @@ from flask_talisman import Talisman
 app = Flask(__name__)
 app.static_folder = 'static'
 app.config['PREFERRED_URL_SCHEME'] = 'https'
+app.config['UPLOAD_FOLDER'] = '/static/temp/'
 
 
 #Dev
