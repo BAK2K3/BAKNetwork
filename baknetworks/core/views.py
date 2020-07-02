@@ -1,6 +1,6 @@
 ##CORE VIEWS.PY##
 
-from baknetwork import APP_ROOT
+from baknetworks import APP_ROOT
 from flask import render_template, Blueprint, send_file
 from flask_login import login_required, current_user
 import os
