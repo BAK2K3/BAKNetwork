@@ -133,7 +133,7 @@ def cnn_covid():
         # cnnoutput = detect_covid(os.path.join(filepath, filename))
         cnnoutput = detect_covid(cnnform.filecnn.data)
         #Remove File
-        os.remove(filepath)
+        # os.remove(filepath)
                        
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
