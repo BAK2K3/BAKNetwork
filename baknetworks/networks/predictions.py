@@ -2,6 +2,7 @@
 
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
+from pillow import Image
 import tensorflow as tf
 from flask import url_for, current_app
 import numpy as np

@@ -133,9 +133,9 @@ def cnn_covid():
         # cnnform.filecnn.data.save(filepath + filename)
         #Run Model, obtain prediction
         # cnnoutput = detect_covid(os.path.join(filepath, filename))
-        xray_image = Image.open(cnnform.filecnn.data)
-        cnnoutput = detect_covid(xray_image)
-        xray_image.close()
+        # xray_image = Image.open(cnnform.filecnn.data)
+        cnnoutput = detect_covid(cnnform.filecnn.data)
+        # xray_image.close()
         #Remove File
         # os.remove(filepath)
                        
