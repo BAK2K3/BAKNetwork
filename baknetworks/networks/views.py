@@ -7,7 +7,7 @@ from baknetworks.models import Comment
 from baknetworks.networks.forms import RNNForm
 from baknetworks import db
 from baknetworks.networks.predictions import prepare_network, generate_text
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 # from sqlalchemy import desc
 
 networks = Blueprint('networks',__name__)

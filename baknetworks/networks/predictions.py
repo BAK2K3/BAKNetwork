@@ -52,3 +52,10 @@ def generate_text(start_seed,gen_size=500,temp=1, filename='shakespeare'):
         text_generated.append(ind_to_char[predicted_id])
         
     return(start_seed+"".join(text_generated))
+
+
+# def detect_covid(filename):
+
+#     model = load_model(os.path.join(current_app.root_path, "static/models/covid_detector.h5", compile=False)
+
+#     filepath=
