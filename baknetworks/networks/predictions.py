@@ -24,7 +24,7 @@ def prepare_network(filename):
 
 
 #Function for generating text from requested model
-def generate_text(start_seed,num_generate=500,temperature, filename):
+def generate_text(start_seed, temperature, filename, num_generate=500):
 
     #Obtain filepath for requested model
     filepath = os.path.join(current_app.root_path, "static/models/", filename+"".join('.h5'))

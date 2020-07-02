@@ -4,8 +4,7 @@
 import os
 
 #Testing only
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
-
+# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = 'true'
 port = int(os.environ.get("PORT", 5000))
@@ -23,8 +22,8 @@ from flask_talisman import Talisman
 app = Flask(__name__)
 app.static_folder = 'static'
 app.config['PREFERRED_URL_SCHEME'] = 'https'
-# app.config['UPLOAD_FOLDER'] = 'uploads/'
 
+#Define Root folder location
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
