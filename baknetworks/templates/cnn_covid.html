@@ -33,7 +33,10 @@
             <hr class="my-2">
             <div class="form-group">
                 {{cnnform.hidden_tag()}}
-                {{cnnform.filecnn(class="custom-file-label")}}
+                {{cnnform.filecnn}}
+                       
+                <hr class="my-2">
+
                 {{cnnform.submitcnn(class="btn btn-secondary mb-2")}}   
             </div>
         </div>        
@@ -43,11 +46,12 @@
 
     <hr class="my-2">
 
-    <div class="container bg-light border border-dark rounded">
+    <div class="container bg-light border text-black border-dark rounded">
         
-    <p class="lead">{{cnnoutput}}</p>
+    <p class="h3">{{cnnoutput}}</p>
       
     </div>
+    <br>
     {% endif %}
 
     </div>
