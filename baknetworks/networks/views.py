@@ -103,6 +103,9 @@ def cnn_covid():
     # RNN Form
     cnnform = CNNForm(prefix='a')
 
+    # Comment Form
+    commentform = CommentForm(prefix='b')
+
     cnnoutput = False
 
     # Comment Form
