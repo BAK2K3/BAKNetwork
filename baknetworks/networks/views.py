@@ -8,6 +8,7 @@ from baknetworks.networks.forms import RNNForm, CNNForm
 from baknetworks import db, APP_ROOT
 from baknetworks.networks.predictions import prepare_network, generate_text, detect_covid
 from werkzeug.utils import secure_filename
+import numpy as np
 import os
 
 #Set up Blueprint for Networks Views
