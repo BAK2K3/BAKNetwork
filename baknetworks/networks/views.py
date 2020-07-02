@@ -4,9 +4,9 @@ from flask import render_template, request, Blueprint, flash, redirect, url_for,
 from flask_login import login_required, current_user, login_manager
 from baknetworks.comment.forms import CommentForm 
 from baknetworks.models import Comment
-from baknetworks.networks.forms import RNNForm
+from baknetworks.networks.forms import RNNForm, CNNForm
 from baknetworks import db
-from baknetworks.networks.predictions import prepare_network, generate_text
+from baknetworks.networks.predictions import prepare_network, generate_text, detect_covid
 from werkzeug.utils import secure_filename
 # from sqlalchemy import desc
 
@@ -122,9 +122,10 @@ def cnn_covid():
     if cnnform.submitcnn.data and cnnform.validate():
 
         filename = secure_filename(cnnform.filecnn.data.filename)
-        cnnform.filecnn.save((os.path.join(current_app.root_path, "static/models/") + filename))
+        cnnform.filecnn.save((os.path.join(current_app.root_path, "static/models/"), filename))
+        filepath = os.path.join(current_app.root_path, "static/models/"), filename)
 
-        # cnnoutput = detect_covid()
+        cnnoutput = detect_covid(filepath)
         
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
