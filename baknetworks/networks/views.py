@@ -157,7 +157,7 @@ def cnn_covid():
         
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
-        cnnoutput = cnnoutput[0][0]
+        # cnnoutput = cnnoutput[0][0]
         if cnnoutput[0][0] < 0.5:
             cnnoutput = "The model has predicted this is a COVID 19 X Ray"
         else:
