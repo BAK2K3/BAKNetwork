@@ -7,45 +7,77 @@
 <div class="jumbotron jumbotron-fluid">
     <div class="container-fluid">
         <div class="d-flex justify-content-center text-center">
-            <h1 class="display-1">Convolutional Neural Network</h1>
-        </div>       
-
-    </div>
-</div>
-
-
-<div class="container pt-4 bg-dark text-white text-center">
-
-    <span class="display-2"> What's a CNN? </span><br>
-    A CNN is a class of networks commonly used for analyzing image data! <br>
-    <hr class="my-2">
-    Convolutional Neural Networks contain 3-dimensional layers (width, height, and depth),<br>
-    and uses filters to perform 'feature extraction' on images, ultimately assigning a probability<br>
-    to the possible classifications being trained. 
-    
-    <hr class="my-2">
-
-    Click below to choose a CNN to interact with!
-
-</div>
-
-
-<div class="container pt-4">
-    <div class="row d-flex p-2">       
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    COVIDXNet
-                </div>
-                <div class="card-body text-center">
-                <h5 class="card-title text-center">A Deep Convolutional Neural Network</h5>
-                <p class="card-text text-center">Classify X-Ray images as either COVID or Normal</p>
-                <a href="{{url_for('networks.rnn_shake')}}" class="btn btn-secondary text-center">COVIDXNet</a>
-                </div>
-            </div>
+            <h1 class="display-1">COVIDXNet</h1>
+        </div>
+        
+        <hr class="my-2">
+        <div class="d-flex justify-content-center text-center">
+            <p>A Convolutional Neural Network.</p>
         </div>
     </div>
 </div>
+
+
+<!-- RNN User input Form-->
+
+<div class="container pt-4 bg-dark text-white text-center">
+
+    <span class="h2"> Upload an lung X-Ray image!</span><br>
+    These can be located from X or Y.<br>
+    <em>The model will then prodict whether the X-Ray contains COVID symptons.</em>
+
+    
+
+    <form method="POST">
+        <div class='container pt-4'>
+            <hr class="my-2">
+            <div class="form-group">
+                {{rnnform.hidden_tag()}}
+                {{rnnform.textrnn(class="form-control bg-light border border-light")}}
+                <br>
+                <div class='row'>
+                    <div class='col-3'>
+                            {{rnnform.temprnn.label(class='h6')}}                        
+                    </div>
+                    <div class='col-6'>
+                        <div class='container'>
+                            <input type="range" min="1" max="200" value="100" class="form-control-range" id="myRange">                       
+                        </div>
+                    </div>
+                    <div class='col-3'>
+                            {{rnnform.temprnn(class="form-control bg-light border border-light text-center")}}
+                    </div>                
+                </div>
+
+                <hr class="my-2">
+
+                {{rnnform.submitrnn(class="btn btn-secondary mb-2")}}   
+            </div>
+        </div>        
+    </form>
+
+    {% if rnnoutput %}
+
+    <hr class="my-2">
+        
+    <textarea class="form-control" rows="15">{{rnnoutput}}</textarea>
+      
+    <br> 
+      
+    {%endif%}
+
+    </div>
+    
+<!-- 
+    <hr class="my-2">
+
+    <textarea id="#rnnoutput" class="form-control" rows="3">{{rnnoutput}}</textarea>
+
+    <br> -->
+
+
+
+
 
 
 
@@ -54,11 +86,12 @@
 <div class="container fixed-bottom">
     <div id="accordion">
         <div class="card">
-           <div class="card text-center" id="headingOne">
+          <div class="card text-center" id="headingOne">
                 <button class="btn btn-secondary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <h3>CNN Comments</h3>
+                    <h2>CNN COVIDXNet Comments</h2>
                 </button>
-           </div>
+          </div>
+        
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     
@@ -67,7 +100,7 @@
                         <div class=form-group>
                         <div class="row">
                             {{commentform.hidden_tag()}}
-                            <div class='col text-center'>
+                            <div class='col text-dark text-center'>
                             {{commentform.text.label}}
                             </div>
                             <div class='col text-center'>
@@ -94,7 +127,9 @@
                                     <th scope='col' colspan="4">Comment</th>                                                          
                                 </tr>
                             </thead>
-                            <tbody>                     
+                
+                            <tbody>
+                            
                                 {% for comment in commentquery %}
                                 <tr>
                                     <th scope="row">{{loop.index}}</th>
@@ -106,6 +141,7 @@
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -113,5 +149,17 @@
 </div>
 
 
+<script> 
+
+var slider = document.getElementById("myRange");
+var tempoutput = document.getElementById("a-temprnn") 
+tempoutput.value = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+    tempoutput.value = this.value;
+}
+
+</script>
 
 {% endblock content %}
