@@ -9,9 +9,6 @@ from baknetworks import db, app
 from baknetworks.networks.predictions import prepare_network, generate_text, detect_covid
 from werkzeug.utils import secure_filename
 import os
-from PIL import Image
-
-# from sqlalchemy import desc
 
 #Set up Blueprint for Network Views
 networks = Blueprint('networks',__name__)
@@ -120,17 +117,21 @@ def rnn_tolstoy():
 @networks.route('/cnn/covid', methods=['GET', 'POST'])
 def cnn_covid():
 
-    # RNN Form
+    #Create CNN Form instance
     cnnform = CNNForm(prefix='a')
 
-    # Comment Form
+    #Create Comment Form
     commentform = CommentForm(prefix='b')
 
+    #Set default cnnoutput to False
     cnnoutput = False
 
-    # Comment Form
+    #If Comment form has been submitted
     commentform = CommentForm()
+    #Extract Comment data from form
     if commentform.validate_on_submit():
+
+        #Save and Commit Comment data to Database  
         savecomment = Comment(text=commentform.text.data,
                             user_id=current_user.id,
                             page='cnn_covid')
@@ -138,27 +139,28 @@ def cnn_covid():
         db.session.commit()
         return redirect(url_for('networks.cnn_covid'))
 
-
+    #If CNN form has been submitted 
     if cnnform.submitcnn.data and cnnform.validate():
-
     
         #Obtain Filename
         filename = secure_filename(cnnform.filecnn.data.filename)
         
-        #Obtain Filepath
+        #Set Filepath
         filepath = url_for('static', filename=filename)
-        # filepath = os.path.join(current_app.root_path, "static/xray/", filename)
+
         #Save file
         cnnform.filecnn.data.save(filepath)
-        #Run Model, obtain prediction
         
-   
+        #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
       
         #Remove File
         os.remove(filepath)
                        
+        #Filter comment data for this page
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
+
+        #Return Relevant Information to page
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
     
 
