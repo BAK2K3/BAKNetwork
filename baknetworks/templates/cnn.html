@@ -31,19 +31,24 @@
 
 
 <div class="container pt-4">
-    <div class="row d-flex p-2">       
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    COVIDXNet
-                </div>
-                <div class="card-body text-center">
-                <h5 class="card-title text-center">A Deep Convolutional Neural Network</h5>
-                <p class="card-text text-center">Classify X-Ray images as either COVID or Normal</p>
-                <a href="{{url_for('networks.rnn_shake')}}" class="btn btn-secondary text-center">COVIDXNet</a>
+    <div class="row d-flex p-2"> 
+        <div class="col-sm-3"></div>  
+
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        COVIDXNet
+                    </div>
+                    <div class="card-body text-center">
+                    <h5 class="card-title text-center">A Deep Convolutional Neural Network</h5>
+                    <p class="card-text text-center">Classify X-Ray images as either COVID or Normal</p>
+                    <a href="{{url_for('networks.cnn_covid')}}" class="btn btn-secondary text-center">COVIDXNet</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        
+        <div class="col-sm-3"></div>  
+
     </div>
 </div>
 
