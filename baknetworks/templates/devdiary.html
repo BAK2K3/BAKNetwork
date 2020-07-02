@@ -8,22 +8,17 @@
             <h1 class="display-1">
                 {%if current_user.is_authenticated %}
 
-                Hi {{current_user.name.split(" ")[0]}}.
+                Welcome to the Dev Diary, {{current_user.name.split(" ")[0]}}
 
                 {%else%}
 
-                Hi.
+                Dev Diary
 
                 {%endif%}
 
              </h1>
         </div>
         
-        <hr class="my-2">
-        <div class="d-flex justify-content-center">
-            <p>Thanks for taking the time to visit my portfolio.</p>
-
-        </div>
     </div>
 </div>
 
