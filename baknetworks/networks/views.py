@@ -129,11 +129,6 @@ def cnn_covid():
     #Create Comment Form
     commentform = CommentForm(prefix='b')
 
-    #Set default cnnoutput to False
-    cnnoutput = 'this is cnnoutput'
-
-    test1 = 'this is test1'
-
     #If Comment form has been submitted
     if commentform.validate_on_submit():
 
@@ -161,11 +156,8 @@ def cnn_covid():
         
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
-
-        if cnnoutput[0] == 0:
-            test1 = 'Covid'
-        else:
-            test1 = 'Normal'
+        cnnoutput = str(round((1 - cnnoutput[0]), 2)) + "percent change of COVID 19"
+    
 
         #Remove File
         os.remove(filepath)

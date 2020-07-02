@@ -87,12 +87,15 @@ def detect_covid(input_image):
     
     #Expand dimensions of array
     input_image = np.expand_dims(input_image, axis=0)
+
+    #Scale image
+    input_image = input_image/255
     
     #Pass array into model for classification
     predictions = model.predict(input_image)
 
     #Destroys model from memory
     tf.keras.backend.clear_session()
-    
+
     #return classification prediction
     return predictions
