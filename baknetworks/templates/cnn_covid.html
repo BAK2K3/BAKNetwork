@@ -12,7 +12,7 @@
         
         <hr class="my-2">
         <div class="d-flex justify-content-center text-center">
-            <p>A Convolutional Neural Network.</p>
+            <p>A CNN for COVID detection in chest X Rays</p>
         </div>
     </div>
 </div>
@@ -28,39 +28,25 @@
 
     
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <div class='container pt-4'>
             <hr class="my-2">
             <div class="form-group">
-                {{rnnform.hidden_tag()}}
-                {{rnnform.textrnn(class="form-control bg-light border border-light")}}
-                <br>
-                <div class='row'>
-                    <div class='col-3'>
-                            {{rnnform.temprnn.label(class='h6')}}                        
-                    </div>
-                    <div class='col-6'>
-                        <div class='container'>
-                            <input type="range" min="1" max="200" value="100" class="form-control-range" id="myRange">                       
-                        </div>
-                    </div>
-                    <div class='col-3'>
-                            {{rnnform.temprnn(class="form-control bg-light border border-light text-center")}}
-                    </div>                
-                </div>
-
+                {{cnnform.hidden_tag()}}
+                {{cnnform.filecnn}}
+                       
                 <hr class="my-2">
 
-                {{rnnform.submitrnn(class="btn btn-secondary mb-2")}}   
+                {{cnnform.submitcnn(class="btn btn-secondary mb-2")}}   
             </div>
         </div>        
     </form>
 
-    {% if rnnoutput %}
+    {% if cnnoutput %}
 
     <hr class="my-2">
         
-    <textarea class="form-control" rows="15">{{rnnoutput}}</textarea>
+    <textarea class="form-control" rows="15">{{cnnoutput}}</textarea>
       
     <br> 
       
@@ -149,17 +135,6 @@
 </div>
 
 
-<script> 
 
-var slider = document.getElementById("myRange");
-var tempoutput = document.getElementById("a-temprnn") 
-tempoutput.value = slider.value; // Display the default slider value
-
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-    tempoutput.value = this.value;
-}
-
-</script>
 
 {% endblock content %}
