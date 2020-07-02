@@ -9,7 +9,7 @@ from baknetworks import db
 from baknetworks.networks.predictions import prepare_network, generate_text, detect_covid
 from werkzeug.utils import secure_filename
 import os
-from pillow import Image
+from PIL import Image
 
 # from sqlalchemy import desc
 
