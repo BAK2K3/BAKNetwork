@@ -157,9 +157,11 @@ def cnn_covid():
         
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
-        cnnoutput = cnnoutput[0]
-        cnnoutput = np.round((1 - cnnoutput), 2)
-        cnnoutput = str(cnnoutput) + "percent change of COVID 19"
+        cnnoutput = cnnoutput[0][0]
+        if cnnoutput[0][0] < 0.5:
+            cnnoutput = "The model has predicted this is a COVID 19 X Ray"
+        else:
+            cnnoutput = "The model has predicted this is a NORMAL X Ray"
     
 
         #Remove File
