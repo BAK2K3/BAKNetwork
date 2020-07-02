@@ -156,7 +156,9 @@ def cnn_covid():
         
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
-        cnnoutput = str(round((1 - cnnoutput[0]), 2)) + "percent change of COVID 19"
+        cnnoutput = cnnoutput[0]
+        cnnoutput = round((1 - cnnoutput), 2)
+        cnnoutput = str(cnnoutput) + "percent change of COVID 19"
     
 
         #Remove File
