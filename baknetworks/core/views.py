@@ -1,8 +1,9 @@
 ##CORE VIEWS.PY##
 
-from baknetworks.models import User
-from flask import render_template, request, Blueprint, redirect, url_for, send_file
-from flask_login import login_required, current_user, login_manager
+from baknetwork import APP_ROOT
+from flask import render_template, Blueprint, send_file
+from flask_login import login_required, current_user
+import os
 
 core = Blueprint('core',__name__)
 
