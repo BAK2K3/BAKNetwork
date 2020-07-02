@@ -132,6 +132,8 @@ def cnn_covid():
     #Set default cnnoutput to False
     cnnoutput = 'this is cnnoutput'
 
+    test1 = 'this is test1'
+
     #If Comment form has been submitted
     if commentform.validate_on_submit():
 
