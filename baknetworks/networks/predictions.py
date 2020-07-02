@@ -23,7 +23,7 @@ def prepare_network(filename):
     return char_to_ind, ind_to_char
 
 
-
+#Function for generating text from requested model
 def generate_text(start_seed,num_generate,temperature, filename):
 
     #Obtain filepath for requested model
@@ -71,12 +71,23 @@ def generate_text(start_seed,num_generate,temperature, filename):
     #return the initial input, concatenated with the generated text. 
     return(start_seed+"".join(text_generated))
 
-
+#Function for passing image into COVID detector
 def detect_covid(file):
 
-      model = load_model(os.path.join(current_app.root_path, "static/models/covid_detector.h5"), compile=False)
-      input_image = image.load_img(file,target_size=(256,256,3))
-      input_image = image.img_to_array(input_image)
-      input_image = np.expand_dims(input_image, axis=0)
-      predictions = model.predict(input_image)
-      return predictions
+    #Load model from correct filepath
+    model = load_model(os.path.join(current_app.root_path, "static/models/covid_detector.h5"), compile=False)
+    
+    #Convert uploaded image in PIL format
+    input_image = image.load_img(file,target_size=(256,256,3))
+    
+    #Convert PIL image to array
+    input_image = image.img_to_array(input_image)
+    
+    #Expand dimensions of array
+    input_image = np.expand_dims(input_image, axis=0)
+    
+    #Pass array into model for classification
+    predictions = model.predict(input_image)
+
+    #return classification prediction
+    return predictions
