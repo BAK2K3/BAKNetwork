@@ -123,7 +123,7 @@ def cnn_covid():
 
         filename = secure_filename(cnnform.filecnn.data.filename)
         cnnform.filecnn.save((os.path.join(current_app.root_path, "static/models/"), filename))
-        filepath = os.path.join(current_app.root_path, "static/models/"), filename)
+        filepath = os.path.join(current_app.root_path, "static/models/", filename)
 
         cnnoutput = detect_covid(filepath)
         
