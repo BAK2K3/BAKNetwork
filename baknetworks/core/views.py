@@ -30,6 +30,9 @@ def privacy():
 @core.route('/database')
 @login_required
 def send_database():
-    filename = 'data.sqlite'
-    filepath = os.path.join(APP_ROOT, filename)
-    return send_file(filepath, as_attachment=True)
+    if current_user.email == "benjamin.a.kavanagh@gmail.com":
+        filename = 'data.sqlite'
+        filepath = os.path.join(APP_ROOT, filename)
+        return send_file(filepath, as_attachment=True)
+    else:
+        return render_template('index.html')
