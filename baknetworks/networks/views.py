@@ -157,7 +157,7 @@ def cnn_covid():
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
         cnnoutput = cnnoutput[0]
-        cnnoutput = round((1 - cnnoutput), 2)
+        cnnoutput = np.round((1 - cnnoutput), 2)
         cnnoutput = str(cnnoutput) + "percent change of COVID 19"
     
 
