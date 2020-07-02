@@ -70,6 +70,7 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     
+                    {%if current_user.is_authenticated %}
                     <!-- Comment Form -->
                     <form method="POST">
                         <div class=form-group>
