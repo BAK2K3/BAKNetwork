@@ -122,7 +122,7 @@ def rnn_tolstoy():
 #CNN Route
 @networks.route('/cnn/covid', methods=['GET', 'POST'])
 def cnn_covid():
-
+    
     #Create CNN Form instance
     cnnform = CNNForm(prefix='a')
 
@@ -159,8 +159,6 @@ def cnn_covid():
         
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
-
-        test1 = 'this is the test1 var'
 
         if cnnoutput[0] == 0:
             test1 = 'Covid'

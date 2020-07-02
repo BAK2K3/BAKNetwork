@@ -68,6 +68,8 @@ def generate_text(start_seed, temperature, filename, num_generate=500):
         #Convert prediction to char and append to generated list of text
         text_generated.append(ind_to_char[predicted_id])
     
+    #Destroys model from memory
+    tf.keras.backend.clear_session()
     #return the initial input, concatenated with the generated text. 
     return(start_seed+"".join(text_generated))
 
@@ -89,5 +91,8 @@ def detect_covid(input_image):
     #Pass array into model for classification
     predictions = model.predict(input_image)
 
+    #Destroys model from memory
+    tf.keras.backend.clear_session()
+    
     #return classification prediction
     return predictions
