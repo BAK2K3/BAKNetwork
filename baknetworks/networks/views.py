@@ -180,7 +180,7 @@ def cnn_covid():
     commentquery = Comment.query.filter_by(page='cnn_covid').all()
 
     #Return Relevant Information to page
-    return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
+    return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, test1=test1)
 
 
 #CNN Route
