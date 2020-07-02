@@ -8,6 +8,7 @@ from baknetworks.networks.forms import RNNForm, CNNForm
 from baknetworks import db
 from baknetworks.networks.predictions import prepare_network, generate_text, detect_covid
 from werkzeug.utils import secure_filename
+import os
 # from sqlalchemy import desc
 
 networks = Blueprint('networks',__name__)
@@ -126,7 +127,8 @@ def cnn_covid():
         filepath = os.path.join(current_app.root_path, "static/models/", filename)
 
         cnnoutput = detect_covid(filepath)
-                
+        os.remove(file_path)
+                       
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
     
