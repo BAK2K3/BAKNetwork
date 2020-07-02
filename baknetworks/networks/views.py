@@ -142,12 +142,12 @@ def cnn_covid():
         #Save file
         cnnform.filecnn.data.save(filepath)
         #Run Model, obtain prediction
-        # cnnoutput = detect_covid(os.path.join(filepath, filename))
-        # xray_image = Image.open(cnnform.filecnn.data)
+        
+   
         cnnoutput = detect_covid(filepath)
-        # xray_image.close()
+      
         #Remove File
-        # os.remove(filepath)
+        os.remove(filepath)
                        
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
