@@ -14,12 +14,10 @@ def index():
     return render_template('index.html')
 
 @core.route('/devdiary')
-
-def about():
+def devdiary():
     return render_template('devdiary.html')
 
 @core.route('/contact')
-@login_required
 def contact():
 
     return render_template('contact.html')
