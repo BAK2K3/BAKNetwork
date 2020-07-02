@@ -137,13 +137,10 @@ def cnn_covid():
         filename = secure_filename(cnnform.filecnn.data.filename)
         
         #Obtain Filepath
-        
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         # filepath = os.path.join(current_app.root_path, "static/xray/", filename)
         #Save file
-        cnnform.filecnn.data.save(app.config['UPLOAD_FOLDER'], filename)
-
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-
+        cnnform.filecnn.data.save(filepath)
         #Run Model, obtain prediction
         # cnnoutput = detect_covid(os.path.join(filepath, filename))
         # xray_image = Image.open(cnnform.filecnn.data)
