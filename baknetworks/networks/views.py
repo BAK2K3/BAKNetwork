@@ -13,6 +13,7 @@ from PIL import Image
 
 # from sqlalchemy import desc
 
+#Set up Blueprint for Network Views
 networks = Blueprint('networks',__name__)
 
 
@@ -25,31 +26,38 @@ def rnn_root():
 @networks.route('/rnn/shakesbot', methods=['GET', 'POST'])
 def rnn_shake():
 
-    # RNN Form
+    # Create an RNN Form instance
     rnnform = RNNForm(prefix='a')
-    # Comment Form
+    # Creete a Comment Form instance
     commentform = CommentForm(prefix='b')
 
+    #Set default rnnoutput to False
     rnnoutput=False
 
-    
+    #If Comment form has been submitted
     if commentform.submit.data and commentform.validate():
+        #Extract Comment data from form
         savecomment = Comment(text=commentform.text.data,
                             user_id=current_user.id,
-                            page='rnn_shake')       
+                            page='rnn_shake')
+        #Save and Commit Comment data to Database       
         db.session.add(savecomment)
         db.session.commit()
         return redirect(url_for('networks.rnn_shake'))
 
+    #If RNN form has been submitted 
     if rnnform.submitrnn.data and rnnform.validate():
 
+        #Extract Form data
         start_seed = rnnform.textrnn.data
         gen_size = 500
         temp = rnnform.temprnn.data/100
         filename='shakespeare'
 
+        #Pass Form Data to Shakesbot text generation
         rnnoutput = generate_text(start_seed, gen_size, temp, filename)
-                
+        
+        #Filter 
         commentquery = Comment.query.filter_by(page='rnn_shake').all()
         return render_template('rnn_shake.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform, rnnoutput=rnnoutput)
     
@@ -129,10 +137,13 @@ def cnn_covid():
         filename = secure_filename(cnnform.filecnn.data.filename)
         
         #Obtain Filepath
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
         # filepath = os.path.join(current_app.root_path, "static/xray/", filename)
         #Save file
-        cnnform.filecnn.data.save(filepath)
+        cnnform.filecnn.data.save(app.config['UPLOAD_FOLDER'], filename)
+
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
         #Run Model, obtain prediction
         # cnnoutput = detect_covid(os.path.join(filepath, filename))
         # xray_image = Image.open(cnnform.filecnn.data)
