@@ -14,7 +14,8 @@
 
 <div class="container pt-4 bg-dark text-white text-center">
 
-    <span class="display-2"> What's a GAN? </span><br>
+    <span class="display-2"> Under Construction! </span><br>
+    <!-- <span class="display-2"> What's a GAN? </span><br>
     Generative Adverserial Networks use two Neural Networks against each other! <br>
     <hr class="my-2">
     For this GAN, one network is the "detective", which thinks it knows what a real number looks like!<br>
@@ -24,7 +25,7 @@
     <hr class="my-2">
 
     Click below to generate an image via the "generator".<br>
-    Then, head over to the Convolutional page to see if our CNN can correctly identify the number! 
+    Then, head over to the Convolutional page to see if our CNN can correctly identify the number!  -->
 
  
 
@@ -62,7 +63,7 @@
                         <div class=form-group>
                         <div class="row">
                             {{commentform.hidden_tag()}}
-                            <div class='col text-center'>
+                            <div class='col text-dark text-center'>
                             {{commentform.text.label}}
                             </div>
                             <div class='col text-center'>
@@ -75,7 +76,15 @@
                             </div>
                         </div>
                     </form>
-                
+
+                    {%else%}
+
+                    <div class='col text-dark text-center'>
+                        <p> Please Log in to leave a comment! </p>
+                    </div>
+
+                    {%endif%}
+                              
                     <!-- Scrollable Table -->
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
                         <table class="table table-bordered table-dark mb-0">

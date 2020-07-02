@@ -91,12 +91,14 @@
         <div class="card">
           <div class="card text-center" id="headingOne">
                 <button class="btn btn-secondary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <h2>RNN Shakesbot Comments</h2>
+                    <h2>Shakesbot Comments</h2>
                 </button>
           </div>
         
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
+
+                    {%if current_user.is_authenticated %}
                     
                     <!-- Comment Form -->
                     <form method="POST">
@@ -116,6 +118,14 @@
                             </div>
                         </div>
                     </form>
+
+                    {%else%}
+
+                    <div class='col text-dark text-center'>
+                        <p> Please Log in to leave a comment! </p>
+                    </div>
+
+                    {%endif%}
                 
 
                     <!-- Scrollable Table -->
@@ -136,7 +146,7 @@
                                 {% for comment in commentquery %}
                                 <tr>
                                     <th scope="row">{{loop.index}}</th>
-                                    <td>{{comment.users.name}}</td>
+                                    <td>{{comment.users.name[0]}}</td>
                                     <td>{{comment.date.date()}}</td>
                                     <th colspan="4">{{comment.text}}</th>
                                 </tr>

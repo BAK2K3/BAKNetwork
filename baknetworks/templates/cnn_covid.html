@@ -23,14 +23,12 @@
 <div class="container pt-4 bg-dark text-white text-center">
 
     <span class="h2"> Upload a chest X-Ray image!</span><br>
-    You can download plenty of pictures from <a href=https://github.com/ieee8023/covid-chestxray-dataset/tree/master/images>this public github</a>.<br>
-    Alternativelty, there are other <a href=https://www.researchgate.net/post/updated_list_Last_updated_June_25th_2020_of_Coronavirus_Covid-19_dataset_and_other_Research_Resources>Open Source repositories</a> to obtain samples.<br>
+    You can download plenty of pictures from <a href=https://github.com/ieee8023/covid-chestxray-dataset/tree/master/images target="_blank">this public github</a>.<br>
+    Alternativelty, there are other <a href=https://www.researchgate.net/post/updated_list_Last_updated_June_25th_2020_of_Coronavirus_Covid-19_dataset_and_other_Research_Resources target="_blank">Open Source repositories</a> to obtain samples.<br>
     <em>The model will then prodict whether the X-Ray contains COVID symptoms.</em>
-
+    <hr class="my-2">
     <form method="POST" enctype="multipart/form-data">
         <div class='container pt-4'>
-            <hr class="my-2">
-
             <div class="form-group">
                 {{cnnform.hidden_tag()}}
                 {{cnnform.filecnn}}
@@ -65,7 +63,7 @@
         <div class="card">
           <div class="card text-center" id="headingOne">
                 <button class="btn btn-secondary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <h2>CNN COVIDXNet Comments</h2>
+                    <h2>COVIDXNet Comments</h2>
                 </button>
           </div>
         
@@ -90,7 +88,15 @@
                             </div>
                         </div>
                     </form>
-                
+
+                    {%else%}
+
+                    <div class='col text-dark text-center'>
+                        <p> Please Log in to leave a comment! </p>
+                    </div>
+
+                    {%endif%}
+
 
                     <!-- Scrollable Table -->
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -110,7 +116,7 @@
                                 {% for comment in commentquery %}
                                 <tr>
                                     <th scope="row">{{loop.index}}</th>
-                                    <td>{{comment.users.name}}</td>
+                                    <td>{{comment.users.name[0]}}</td>
                                     <td>{{comment.date.date()}}</td>
                                     <th colspan="4">{{comment.text}}</th>
                                 </tr>

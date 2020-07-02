@@ -92,7 +92,7 @@
                         <div class=form-group>
                         <div class="row">
                             {{commentform.hidden_tag()}}
-                            <div class='col text-center'>
+                            <div class='col text-dark text-center'>
                             {{commentform.text.label}}
                             </div>
                             <div class='col text-center'>
@@ -105,6 +105,14 @@
                             </div>
                         </div>
                     </form>
+
+                    {%else%}
+
+                    <div class='col text-dark text-center'>
+                        <p> Please Log in to leave a comment! </p>
+                    </div>
+
+                    {%endif%}
                 
                     <!-- Scrollable Table -->
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -122,7 +130,7 @@
                                 {% for comment in commentquery %}
                                 <tr>
                                     <th scope="row">{{loop.index}}</th>
-                                    <td>{{comment.users.name}}</td>
+                                    <td>{{comment.users.name[0]}}</td>
                                     <td>{{comment.date.date()}}</td>
                                     <th colspan="4">{{comment.text}}</th>
                                 </tr>
