@@ -1,7 +1,7 @@
 ##CORE VIEWS.PY##
 
 from baknetworks.models import User
-from flask import render_template, request, Blueprint, redirect, url_for
+from flask import render_template, request, Blueprint, redirect, url_for, send_file
 from flask_login import login_required, current_user, login_manager
 
 core = Blueprint('core',__name__)
@@ -26,3 +26,10 @@ def contact():
 def privacy():
 
     return render_template('privacy.html')
+
+@core.route('/database')
+@login_required
+def send_database():
+    filename = 'data.sqlite'
+    filepath = os.path.join(APP_ROOT, filename)
+    return send_file(filepath, as_attachment=True)
