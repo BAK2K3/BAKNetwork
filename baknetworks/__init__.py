@@ -23,7 +23,10 @@ from flask_talisman import Talisman
 app = Flask(__name__)
 app.static_folder = 'static'
 app.config['PREFERRED_URL_SCHEME'] = 'https'
-app.config['UPLOAD_FOLDER'] = 'uploads/'
+# app.config['UPLOAD_FOLDER'] = 'uploads/'
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 
 
 #Dev

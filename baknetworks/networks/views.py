@@ -5,7 +5,7 @@ from flask_login import login_required, current_user, login_manager
 from baknetworks.comment.forms import CommentForm 
 from baknetworks.models import Comment
 from baknetworks.networks.forms import RNNForm, CNNForm
-from baknetworks import db, app
+from baknetworks import db, APP_ROOT
 from baknetworks.networks.predictions import prepare_network, generate_text, detect_covid
 from werkzeug.utils import secure_filename
 import os
@@ -149,8 +149,7 @@ def cnn_covid():
         
         #Set Filepath
         # filepath = url_for('static', filename=filename)
-        basedir = os.path.abspath(os.path.dirname(__file__))
-        filepath = os.path.join(basedir,'static', filename)
+        filepath = os.path.join(APP_ROOT,'static', filename)
 
         #Save file
         cnnform.filecnn.data.save(filepath)
