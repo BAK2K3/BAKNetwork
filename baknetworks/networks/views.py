@@ -18,6 +18,8 @@ networks = Blueprint('networks',__name__)
 def rnn_root():
     return render_template('rnn.html')
 
+##################SHAKESBOT#######################
+
 #Shakesbot Route
 @networks.route('/rnn/shakesbot', methods=['GET', 'POST'])
 def rnn_shake():
@@ -51,7 +53,7 @@ def rnn_shake():
         filename='shakespeare'
 
         #Pass Form Data to Shakesbot text generation
-        rnnoutput = generate_text(start_seed, gen_size, temp, filename)
+        rnnoutput = generate_text(start_seed, temp, filename)
         
         #Filter comment data for this page
         commentquery = Comment.query.filter_by(page='rnn_shake').all()
@@ -64,6 +66,8 @@ def rnn_shake():
     #Return Relevant Information to page
     return render_template('rnn_shake.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform)
 
+
+##################TOLSTOYBOT#######################
  
 #Tolstoy Route
 @networks.route('/rnn/tolstoybot', methods=['GET', 'POST'])
@@ -100,20 +104,20 @@ def rnn_tolstoy():
         filename='tolstoybot'
         
         #Pass Form Data to Tolstoybot text generation
-        rnnoutput = generate_text(start_seed, gen_size, temp, filename)
+        rnnoutput = generate_text(start_seed, temp, filename)
         
         #Filter comment data for this page
         commentquery = Comment.query.filter_by(page='rnn_tolstoy').all()
         #Return Relevant Information to page
         return render_template('rnn_tolstoy.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform, rnnoutput=rnnoutput)
     
-
-    
     #Filter comment data for this page
     commentquery = Comment.query.filter_by(page='rnn_tolstoy').all()
     #Return Relevant Information to page
     return render_template('rnn_tolstoy.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform)
 
+
+##################COVID#######################
 
 #CNN Route
 @networks.route('/cnn/covid', methods=['GET', 'POST'])
@@ -126,7 +130,7 @@ def cnn_covid():
     commentform = CommentForm(prefix='b')
 
     #Set default cnnoutput to False
-    cnnoutput = False
+    cnnoutput = 'this is cnnoutput'
 
     #If Comment form has been submitted
     if commentform.validate_on_submit():
@@ -148,7 +152,6 @@ def cnn_covid():
         filename = secure_filename(cnnform.filecnn.data.filename)
         
         #Set Filepath
-        # filepath = url_for('static', filename=filename)
         filepath = os.path.join(APP_ROOT, 'static', filename)
 
         #Save file
@@ -157,12 +160,12 @@ def cnn_covid():
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
 
-        print(cnnoutput)
+        test1 = 'this is the test1 var'
 
         if cnnoutput[0] == 0:
-            cnnoutput = 'Covid'
+            test1 = 'Covid'
         else:
-            cnnoutput = 'Normal'
+            test1 = 'Normal'
 
         #Remove File
         os.remove(filepath)
@@ -171,7 +174,7 @@ def cnn_covid():
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
 
         #Return Relevant Information to page
-        return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
+        return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput, test1=test1)
     
     #Filter comment data for this page
     commentquery = Comment.query.filter_by(page='cnn_covid').all()
