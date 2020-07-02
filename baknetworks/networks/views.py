@@ -149,7 +149,7 @@ def cnn_covid():
         
         #Set Filepath
         # filepath = url_for('static', filename=filename)
-        filepath = os.path.join(APP_ROOT, 'baknetworks', 'static', filename)
+        filepath = os.path.join(APP_ROOT, 'static', filename)
 
         #Save file
         cnnform.filecnn.data.save(filepath)
