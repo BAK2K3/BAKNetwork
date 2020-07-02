@@ -1,7 +1,8 @@
 ##NETWORKS FORMS.PY##
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, FileField
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms import StringField, SubmitField, IntegerField, 
 from wtforms.validators import DataRequired, NumberRange
 from wtforms import ValidationError
 
@@ -16,5 +17,5 @@ class RNNForm(FlaskForm):
 
 class CNNForm(FlaskForm):
 
-    filecnn = FileField('Select File')
+    filecnn = FileField('Select File', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     submitcnn = SubmitField('Submit')
