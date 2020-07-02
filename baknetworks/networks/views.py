@@ -122,12 +122,16 @@ def cnn_covid():
 
     if cnnform.submitcnn.data and cnnform.validate():
 
+        #Obtain Filename
         filename = secure_filename(cnnform.filecnn.data.filename)
-        cnnform.filecnn.save((os.path.join(current_app.root_path, "static/models/"), filename))
-        filepath = os.path.join(current_app.root_path, "static/models/", filename)
-
+        #Obtain Filepath
+        filepath = os.path.join(current_app.root_path, "static/xray/", filename)
+        #Save file
+        cnnform.filecnn.save(filepath)
+        #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
-        os.remove(file_path)
+        #Remove File
+        os.remove(filepath)
                        
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
