@@ -24,40 +24,51 @@ def prepare_network(filename):
 
 
 
-def generate_text(start_seed,gen_size=500,temp=1, filename='shakespeare'):
+def generate_text(start_seed,num_generate,temperature, filename):
 
+    #Obtain filepath for requested model
     filepath = os.path.join(current_app.root_path, "static/models/", filename+"".join('.h5'))
    
+    #Obtain index mappings for requested corpus
     char_to_ind, ind_to_char = prepare_network(filename)
 
+    #Load the correct model to memory
     model = load_model(filepath, compile=False)
-
-    num_generate = gen_size
     
+    #Map each character in start_seed to it's relative index
     input_eval = [char_to_ind[s] for s in start_seed]
     
+    #Expand the dimensions
     input_eval = tf.expand_dims(input_eval, 0)
     
+    #Create empty list for generated text
     text_generated = []
     
-    temperature = temp
-    
+    #Reset the states of the model        
     model.reset_states()
     
+    #for each iteration of num_generate
     for i in range(num_generate):
         
+        #Obtain probability matrix for current iteration 
         predictions = model(input_eval)
         
+        #Reduce dimensions
         predictions = tf.squeeze(predictions,0)
-        
+
+        #Multiply probability matrix by temperature
         predictions = predictions/temperature
         
+        #Select a random outcome, based on the unnormalized log-probabilities produced by the model
         predicted_id = tf.random.categorical(predictions, num_samples=1)[-1,0].numpy()
         
+        #Expand dimensions of prediction and assign as next input evaluation
         input_eval = tf.expand_dims([predicted_id], 0)
         
+        #Convert prediction to char and append to generated list of text
         text_generated.append(ind_to_char[predicted_id])
-        
+    
+    #return the initial input, concatenated with the generated text. 
     return(start_seed+"".join(text_generated))
 
 
@@ -65,5 +76,7 @@ def detect_covid(file):
 
       model = load_model(os.path.join(current_app.root_path, "static/models/covid_detector.h5"), compile=False)
       input_image = image.load_img(file,target_size=(256,256,3))
+      input_image = image.img_to_array(input_image)
+      input_image = np.expand_dims(input_image, axis=0)
       predictions = model.predict(input_image)
       return predictions

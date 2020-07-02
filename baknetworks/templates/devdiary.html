@@ -157,7 +157,7 @@
       #Create empty list for generated text
       text_generated = []
       
-      #Reset the states of tyhe model        
+      #Reset the states of the model        
       model.reset_states()
       
       #for each iteration of num_generate
@@ -169,7 +169,7 @@
           #Reduce dimensions
           predictions = tf.squeeze(predictions,0)
           
-          #Multiply probabily matrix by temperature
+          #Multiply probability matrix by temperature
           predictions = predictions/temperature
           
           #Select a random outcome, based on the unnormalised log-probabilities produced by the model
