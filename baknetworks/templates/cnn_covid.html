@@ -30,11 +30,20 @@
         <div class='container pt-4'>
             <hr class="my-2">
 
-            <div class="form-group">
-                {{cnnform.hidden_tag()}}
-                {{cnnform.filecnn}}
-                {{cnnform.submitcnn(class="btn btn-secondary mb-2")}}   
-            </div>
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                  {{cnnform.hidden_tag()}}
+                  {{cnnform.filecnn(class='custom-file-input')}}
+                  {{cnnform.filecnn.label(class='custom-file-label')}}
+                  
+                </div>
+                {{cnnform.submitcnn(class="input-group-append")}} 
+              </div>
+
+
+
+
+          
         </div>        
     </form>
 
