@@ -9,6 +9,8 @@ from baknetworks import db
 from baknetworks.networks.predictions import prepare_network, generate_text, detect_covid
 from werkzeug.utils import secure_filename
 import os
+from pillow import Image
+
 # from sqlalchemy import desc
 
 networks = Blueprint('networks',__name__)
@@ -123,7 +125,7 @@ def cnn_covid():
     if cnnform.submitcnn.data and cnnform.validate():
 
         #Obtain Filename
-        filename = secure_filename(cnnform.filecnn.data.filename)
+        # filename = secure_filename(.filename)
         #Obtain Filepath
         # filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "static/xray/")
         # filepath = os.path.join(current_app.root_path, "static/xray/", filename)
@@ -131,7 +133,9 @@ def cnn_covid():
         # cnnform.filecnn.data.save(filepath + filename)
         #Run Model, obtain prediction
         # cnnoutput = detect_covid(os.path.join(filepath, filename))
-        cnnoutput = detect_covid(cnnform.filecnn.data)
+        xray_image = Image.open(cnnform.filecnn.data)
+        cnnoutput = detect_covid(xray_image)
+        xray_image.close()
         #Remove File
         # os.remove(filepath)
                        
