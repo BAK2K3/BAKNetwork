@@ -10,9 +10,8 @@ from baknetworks.networks.predictions import prepare_network, generate_text, det
 from werkzeug.utils import secure_filename
 import os
 
-#Set up Blueprint for Network Views
+#Set up Blueprint for Networks Views
 networks = Blueprint('networks',__name__)
-
 
 #RNN Route
 @networks.route('/rnn/')
@@ -23,9 +22,10 @@ def rnn_root():
 @networks.route('/rnn/shakesbot', methods=['GET', 'POST'])
 def rnn_shake():
 
-    # Create an RNN Form instance
+    #Create an RNN Form instance
     rnnform = RNNForm(prefix='a')
-    # Creete a Comment Form instance
+
+    #Creete a Comment Form instance
     commentform = CommentForm(prefix='b')
 
     #Set default rnnoutput to False
@@ -59,7 +59,6 @@ def rnn_shake():
         #Return Relevant Information to page
         return render_template('rnn_shake.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform, rnnoutput=rnnoutput)
     
-  
     #Filter comment data for this page
     commentquery = Comment.query.filter_by(page='rnn_shake').all() 
     #Return Relevant Information to page
@@ -81,10 +80,12 @@ def rnn_tolstoy():
 
     #If Comment form has been submitted
     if commentform.submit.data and commentform.validate():
+
         #Extract Comment data from form
         savecomment = Comment(text=commentform.text.data,
                             user_id=current_user.id,
                             page='rnn_tolstoy')    
+
         #Save and Commit Comment data to Database    
         db.session.add(savecomment)
         db.session.commit()
@@ -92,6 +93,7 @@ def rnn_tolstoy():
 
     #If RNN form has been submitted 
     if rnnform.submitrnn.data and rnnform.validate():
+
         #Extract RNN Form data
         start_seed = rnnform.textrnn.data
         temp = rnnform.temprnn.data/100
@@ -127,14 +129,14 @@ def cnn_covid():
     cnnoutput = False
 
     #If Comment form has been submitted
-    commentform = CommentForm()
-    #Extract Comment data from form
     if commentform.validate_on_submit():
 
-        #Save and Commit Comment data to Database  
+        #Extract Comment data from form
         savecomment = Comment(text=commentform.text.data,
                             user_id=current_user.id,
                             page='cnn_covid')
+
+        #Save and Commit Comment data to Database  
         db.session.add(savecomment)
         db.session.commit()
         return redirect(url_for('networks.cnn_covid'))
@@ -165,15 +167,11 @@ def cnn_covid():
         #Return Relevant Information to page
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
     
-
-    
-    
+    #Filter comment data for this page
     commentquery = Comment.query.filter_by(page='cnn_covid').all()
 
+    #Return Relevant Information to page
     return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
-
-
-
 
 
 #CNN Route
@@ -185,17 +183,26 @@ def cnn():
 @networks.route('/gan', methods=['GET', 'POST'])
 def gan():
     
-    # Comment Form
+    #Create Commen Form Instance
     commentform = CommentForm(prefix='a')
+
+    #If Comment form has been submitted
     if commentform.validate_on_submit():
+
+        #Extract Comment data from form
         savecomment = Comment(text=commentform.text.data,
                             user_id=current_user.id,
-                            page='gan')       
+                            page='gan')   
+
+        #Save and Commit Comment data to Database  
         db.session.add(savecomment)
         db.session.commit()
         return redirect(url_for('networks.gan'))
 
+    #Filter comment data for this page
     commentquery = Comment.query.filter_by(page='gan').all()
+
+    #Return Relevant Information to page
     return render_template('gan.html', commentform=commentform, commentquery=commentquery)
 
 
