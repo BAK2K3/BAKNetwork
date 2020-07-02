@@ -72,13 +72,13 @@ def generate_text(start_seed,num_generate,temperature, filename):
     return(start_seed+"".join(text_generated))
 
 #Function for passing image into COVID detector
-def detect_covid(file):
+def detect_covid(input_image):
 
     #Load model from correct filepath
     model = load_model(os.path.join(current_app.root_path, "static/models/covid_detector.h5"), compile=False)
     
     #Convert uploaded image in PIL format
-    input_image = image.load_img(file,target_size=(256,256,3))
+    input_image = image.load_img(input_image,target_size=(512,512,3))
     
     #Convert PIL image to array
     input_image = image.img_to_array(input_image)
