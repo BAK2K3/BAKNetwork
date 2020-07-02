@@ -125,12 +125,13 @@ def cnn_covid():
         #Obtain Filename
         filename = secure_filename(cnnform.filecnn.data.filename)
         #Obtain Filepath
-        filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "static/xray")
+        # filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "static/xray/")
         # filepath = os.path.join(current_app.root_path, "static/xray/", filename)
         #Save file
-        cnnform.filecnn.data.save(filepath + filename)
+        # cnnform.filecnn.data.save(filepath + filename)
         #Run Model, obtain prediction
-        cnnoutput = detect_covid(os.path.join(filepath, filename))
+        # cnnoutput = detect_covid(os.path.join(filepath, filename))
+        cnnoutput = detect_covid(cnnform.filecnn.data)
         #Remove File
         os.remove(filepath)
                        
