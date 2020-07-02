@@ -60,4 +60,4 @@ def generate_text(start_seed,gen_size=500,temp=1, filename='shakespeare'):
     #   model = load_model(os.path.join(current_app.root_path, "static/models/covid_detector.h5"), compile=False)
     #   input_image = image.load_img(file,target_size=(256,256,3))
     #   predictions = model.predict(input_image)
-    #   return input_image, predictions
+    #   return predictions

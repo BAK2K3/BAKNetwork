@@ -14,7 +14,7 @@ class RNNForm(FlaskForm):
     temprnn = IntegerField(label='Temp (%)', validators=[DataRequired(), NumberRange(1, 200)])
     submitrnn = SubmitField('Generate') 
 
-class CNNFile(FlaskForm):
+class CNNForm(FlaskForm):
 
     filecnn = FileField('Select File')
     submitcnn = SubmitField('Submit')

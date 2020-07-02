@@ -119,12 +119,12 @@ def cnn_covid():
         return redirect(url_for('networks.cnn_covid'))
 
 
-    if cnnform.submitrnn.data and cnnform.validate():
+    if cnnform.submitcnn.data and cnnform.validate():
 
         filename = secure_filename(cnnform.filecnn.data.filename)
         cnnform.filecnn.save((os.path.join(current_app.root_path, "static/models/") + filename))
 
-        # cnnoutput = generate_text(start_seed, gen_size, temp, filename)
+        # cnnoutput = detect_covid()
         
         commentquery = Comment.query.filter_by(page='cnn_covid').all()
         return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform, cnnoutput=cnnoutput)
