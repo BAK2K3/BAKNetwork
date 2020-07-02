@@ -156,7 +156,14 @@ def cnn_covid():
         
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
-      
+
+        print(cnnoutput)
+
+        if cnnoutput[0] == 0:
+            cnnoutput = 'Covid'
+        else:
+            cnnoutput = 'Normal'
+
         #Remove File
         os.remove(filepath)
                        
