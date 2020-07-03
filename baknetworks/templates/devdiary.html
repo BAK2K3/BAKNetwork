@@ -361,7 +361,7 @@
           
           <p>I did a little searching, and came across an <a href="https://www.kaggle.com/nabeelsajid917/covid-19-x-ray-10000-images/data" target= "_blank"> open source dataset of chest X Rays</a>. This dataset contains COVID 19 chest X Rays, and normal chest X Rays, and claims you can create a Machine Learning algorithm with a <em>“high accuracy”</em>.  To be honest, the only dataset I’d previously done image recognition on was the <a href = "https://en.wikipedia.org/wiki/MNIST_database" target= "_blank">MNIST dataset</a>, so while I thought I might have been aiming a little high, I thought I’d give this a go. Was a capable of training a Convolution Neural Network to detect COVID 19 from X Rays?</p> 
           
-          <p>I took a quick look at the generate_images.py file from the Kaggle Dataset. This takes a generous sample of the available X Rays, and creates over a 6 thousand variations of these samples through rotation, reshaping, and transformation. This is what different is between the two types of X-Rays:</p>
+          <p>I took a quick look at the generate_images.py file from the Kaggle Dataset. This takes a generous sample of the available X Rays, and creates over a 6 thousand variations of these samples through rotation, reshaping, and transformation. This is the difference between the two types of X-Rays:</p>
           
           <p><img src="{{ url_for('static', filename='XRaySamples.jpg')}}"  class="img-fluid text-center mx-auto d-block"></p>
           
