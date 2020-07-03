@@ -1,14 +1,16 @@
+#########################
+###USERS USER_OAUTH.PY###
+#########################
+
 from flask import Blueprint, flash
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_login import login_user, current_user
-import os
-
-from baknetworks import core, db, app 
+from baknetworks import db 
 from baknetworks.models import User, OAuth
-
 from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
 from sqlalchemy.orm.exc import NoResultFound
+import os
 
 #Create a google blueprint, assigning client id and secret from environment variables, 
 #Define required scope 
@@ -54,7 +56,6 @@ def google_logged_in(blueprint, token):
 
     #Or Create new user and log them in
     else:
-
         email = account_info_json['email']        
         name = account_info_json['name']
         picture = account_info_json['picture']
@@ -62,7 +63,6 @@ def google_logged_in(blueprint, token):
         oauth.user = user
         db.session.add_all([user, oauth])
         db.session.commit()
-
         login_user(user)
         flash("Successfully signed in.")
     
