@@ -338,6 +338,166 @@
         </div>
       </div>
     </div>
+
+
+
+    <div class="card">   
+      <div class="card-header" id="headingThree">
+        <h2 class="mb-0">
+          <button class="btn btn-dark btn-block text-center collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Dev Diary #2 - Deploying a Convolutional Neural Network! 
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordianDev">
+        <div class="card-body">
+         
+          <strong>03/07/2020</strong><br>
+
+          <p>Whenever I talk to friends and family about Neural Networks, after their eyes have stopped glossing over, their first question is usually “…but who needs a bot that can write Shakespeare?”.  And that’s a good question. While I personally find the concept of Neural Networks fascinating and particularly ground breaking, given this black box can learn trends from data and essentially reproduce <a href= “https://en.wikipedia.org/wiki/Universal_approximation_theorem” target=”_blank”> any function</a>, I sometimes find it hard to explain what I can personally do  with my capabilities to  help better the world, of make someone’s life or job easier. </p>
+          
+          <p>Having had experience now with Autoencoders, Generative Adversarial Networks, and Convolutional Neural Networks, I took to <a href=”https://www.kaggle.com/” target= “_blank”> Kaggle </a> to find some inspiration for what I could tackle next for the portfolio. I’d been interested in attempting my own form or <a href= “https://neuralstyle.art/” target= “_blank”> art transformation </a>, and while this is something I still want to experiment with, I’m now a little more aware of what my limitations are using Flask and Heroku, so decided to try and aim for something a little more realistic for the time being. I didn’t expect to deploy another interactive model; I was hoping to create a useful model, showcase its functionality, and share the repo for it.</p>
+          
+          <p>I did a little searching, and came across an <a href=” https://www.kaggle.com/nabeelsajid917/covid-19-x-ray-10000-images/data” target= “_blank”> open source dataset of chest X Rays</a>. This dataset contains COVID 19 chest X Rays, and normal chest X Rays, and claims you can create a Machine Learning algorithm with a <em>“high accuracy”</em>.  To be honest, the only dataset I’d previously done image recognition on was the <a href = “https://en.wikipedia.org/wiki/MNIST_database“ target= “_blank”>MNIST dataset</a>, so while I thought I might have been aiming a little high, I thought I’d give this a go. Was a capable of training a Convolution Neural Network to detect COVID 19 from X Rays?</p> 
+          
+          <p>I took a quick look at the generate_images.py file from the Kaggle Dataset. This takes a generous sample of the available X Rays, and creates over a 6 thousand variations of these samples through rotation, reshaping, and transformation. This is what different is between the two types of X-Rays:</p>
+          
+          <p><img src="{{ url_for('static', filename='XRaySamples.jpg')}}"  class="img-fluid text-center"></p>
+          
+          <p>As you can see, without a medical degree, there’s no chance a lay-person can take a look at these two images and categorise them in a matter of seconds. But that’s what I was hoping to accomplished through training a Convolutional Neural Network on these images.</p>
+          
+          <p>The dataset from Kaggle also provided a python file to train the model, but I decided to go in blind to see what I could achieve. The generate_images.py produced two folders of images: covid and normal. The first thing I wanted to do was the split the data between training data and test data. While sklearn has an <a href=” https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html” target=”_blank”> incredibly helpful function</a> for splitting data for training and testing purposes, given how I intended on classifying the data before and after training, I wanted to split the data itself on file prior to loading it. </p>
+          
+  <pre class="prettyprint">
+  import sys, random, os
+  import shutil
+  from imutils import paths
+  
+  #obtain the file directory using pwd
+  my_data_dir = pwd
+  
+  #set file path for Covid images and normal images
+  all_covid  = my_data_dir + '\\all_data\\covid'
+  all_normal = my_data_dir + '\\all_data\\normal'
+  
+  #set file path for new test and train covid data
+  pathCovidTest = my_data_dir + '\\test\\covid'
+  pathCovidTrain = my_data_dir + '\\train\\covid'
+  
+  #set file path for new test and train normal data
+  pathNormalTest = my_data_dir + '\\test\\normal'
+  pathNormalTrain = my_data_dir + '\\train\\normal'
+  
+  #function for shuffling and randomly splitting files into selected directories, with given ratio 
+  def splitdirs(files, dir1, dir2, ratio):
+      shuffled = files[:]
+      random.shuffle(shuffled)
+      num = round(len(shuffled) * ratio)
+      to_dir1, to_dir2 = shuffled[:num], shuffled[num:]
+      for d in dir1, dir2:
+          if not os.path.exists(d):
+              os.mkdir(d)
+      for file in to_dir1:
+          shutil.copyfile(file, os.path.join(dir1, os.path.basename(file)))
+      for file in to_dir2:
+          shutil.copyfile(file, os.path.join(dir2, os.path.basename(file)))
+  
+  #set ratio for splitting
+  ratio = 0.25
+  ratio = float(ratio)
+        
+  #call functions for splitting data
+  splitdirs(imagePathsCovid, pathCovidTest, pathCovidTrain, ratio)
+  splitdirs(imagePathsNormal, pathNormalTest, pathNormalTrain, ratio)</pre>
+          
+          
+          <p>While I’m aware there probably exists a <em>much more efficient way of doing this</em>, it worked as intended, and I now had a proportional 25% train test split between COVID images and normal images. I then implemented my own image generator, so as to further obscure the data as much as possible, creating as much variation between the samples as possible.</p>
+          
+          <pre class="prettyprint">
+  image_gen = ImageDataGenerator(rotation_range=20, # rotate the image 20 degrees
+                                  width_shift_range=0.10, # Shift the pic width by a max of 5%
+                                  height_shift_range=0.10, # Shift the pic height by a max of 5%
+                                  rescale=1/255, # Rescale the image by normalzing it.
+                                  shear_range=0.1, # Shear means cutting away part of the image (max 10%)
+                                  zoom_range=0.1, # Zoom in by 10% max
+                                  horizontal_flip=True, # Allo horizontal flipping
+                                  fill_mode='nearest' # Fill in missing pixels with the nearest filled value
+                                ) </pre>
+          
+          <p>The image sizes ranged from around 256 x 256 to 1024 x 1024, so met in the middle by setting the image size to 512 x 512. I then went on to create the respective training image generator and test image generator to be fed into the model. </p>
+          
+          <pre class="prettyprint">
+  train_image_gen = image_gen.flow_from_directory(train_path,
+                                                  target_size=image_shape[:2],
+                                                  color_mode='rgb',
+                                                  batch_size=batch_size,
+                                                  class_mode='binary')</pre>
+
+          <pre class="prettyprint">
+  test_image_gen = image_gen.flow_from_directory(test_path,
+                                                  target_size=image_shape[:2],
+                                                  color_mode='rgb',
+                                                  batch_size=batch_size,
+                                                  class_mode='binary',shuffle=False)</pre>
+          
+          <p>The next step was to create the model. I implemented a deep CNN, with the filters doubling on each subsequent convolutional layer, and a final dense layer prior to the activation/classification layer.</p>
+          
+          <pre class="prettyprint">
+  model = Sequential()
+  
+  model.add(Conv2D(filters=32, kernel_size=(3,3),input_shape=image_shape, activation='relu',))
+  model.add(MaxPooling2D(pool_size=(4, 4)))
+  
+  model.add(Conv2D(filters=64, kernel_size=(3,3),input_shape=image_shape, activation='relu',))
+  model.add(MaxPooling2D(pool_size=(4, 4)))
+  
+  model.add(Conv2D(filters=128, kernel_size=(3,3),input_shape=image_shape, activation='relu',))
+  model.add(MaxPooling2D(pool_size=(4, 4)))
+  
+  model.add(Flatten())
+  
+  model.add(Dense(128))
+  model.add(Activation('relu'))
+  
+  model.add(Dropout(0.5))
+  
+  model.add(Dense(1))
+  model.add(Activation('sigmoid'))
+  
+  model.compile(loss='binary_crossentropy',
+                optimizer='adam',
+                metrics=['accuracy'])</pre>
+          
+          <p>I implemented early stopped so as to prevent over-fitting, and after only 7 epochs, the model was trained, and the accuracy and validation loss took me by surprise. I ran the test image generator through the model to obtain sample predictions, and the model was reporting a 99.2% accuracy. </p>
+          
+          <p><img src="{{ url_for('static', filename='model_history.png')}}"  class="img-fluid text-center"></p>
+          
+          <p><img src="{{ url_for('static', filename='Classification_Report.jpg')}}"  class="img-fluid text-center"></p>
+          
+          <p>Now I understand that the dataset was limited given the nature of what we’re trying to detect, and while the image generators were implemented to expand upon these images to create as many variations of these samples as possible, the scope of data required to truly and more accurately detect COVID symptoms from <em>any</em> X ray image would be vast. But none-the-less, the model functioned as intended, and appeared to correctly classify COVID symptoms from chest X Ray images.</p>
+          
+          <p>The unexpected success of this model inspired me to attempt to deploy the model fully to the website, allowing users to upload X Ray images from the <a href=https://www.researchgate.net/post/updated_list_Last_updated_June_25th_2020_of_Coronavirus_Covid-19_dataset_and_other_Research_Resources target="_blank"> many available open source repositories</>, to classify images on the fly. While the prior process of deploying the stateful RNN was rather overwhelming, I was confident that this was a relatively simple implementation. </p>
+          
+          <p>After a little bit of a hiccup with file handling, by the end of the day I’d created a routing and page for the newly named COVIDXNet, allowing users to upload an image, which gets transferred to the server, handled and transformed appropriately before being passed to the model, with a prediction being communicated back to the user. To avoid clutter on the server, the file is handled and utilised by the model before being immediately deleted, with a prediction being passed back to the webpage via a separate variable. The model is responsive, reliable and is <em>apparently</em> extremely accurate. </p>
+          
+          <p>For further details on the model training process, please visit the Github repo.</p>
+          
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
   </div>
   </div>
 
