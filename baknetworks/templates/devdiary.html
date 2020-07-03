@@ -375,11 +375,15 @@
   from imutils import paths
   
   #obtain the file directory using pwd
-  my_data_dir = pwd
+  my_data_dir = #Enter pwd output here#
   
   #set file path for Covid images and normal images
-  all_covid  = my_data_dir + '\\all_data\\covid'
-  all_normal = my_data_dir + '\\all_data\\normal'
+  all_covid  = my_data_dir + '\\generated_dataset\\covid'
+  all_normal = my_data_dir + '\\generated_dataset\\normal'
+
+  #Obtain relative file paths for each image 
+  imagePathsCovid = list(paths.list_images(all_covid))
+  imagePathsNormal = list(paths.list_images(all_normal))
   
   #set file path for new test and train covid data
   pathCovidTest = my_data_dir + '\\test\\covid'
