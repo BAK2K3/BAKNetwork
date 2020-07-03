@@ -10,6 +10,7 @@ from baknetworks.networks.predictions import prepare_network, generate_text, det
 from werkzeug.utils import secure_filename
 import numpy as np
 import os
+import gc
 
 #Set up Blueprint for Networks Views
 networks = Blueprint('networks',__name__)
@@ -17,6 +18,7 @@ networks = Blueprint('networks',__name__)
 #RNN Route
 @networks.route('/rnn/')
 def rnn_root():
+    gc.collect()
     return render_template('rnn.html')
 
 ##################SHAKESBOT#######################
@@ -36,10 +38,12 @@ def rnn_shake():
 
     #If Comment form has been submitted
     if commentform.submit.data and commentform.validate():
+        
         #Extract Comment data from form
         savecomment = Comment(text=commentform.text.data,
                             user_id=current_user.id,
                             page='rnn_shake')
+
         #Save and Commit Comment data to Database       
         db.session.add(savecomment)
         db.session.commit()
@@ -183,12 +187,13 @@ def cnn_covid():
 #CNN Route
 @networks.route('/cnn')
 def cnn():
+    gc.collect()
     return render_template('cnn.html')
 
 #GAN Route
 @networks.route('/gan', methods=['GET', 'POST'])
 def gan():
-    
+    gc.collect()
     #Create Comment Form Instance
     commentform = CommentForm(prefix='a')
 

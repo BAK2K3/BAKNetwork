@@ -7,6 +7,7 @@ import tensorflow as tf
 from flask import url_for, current_app
 import numpy as np
 import os
+import gc
 
 #Function for preparing data depending on RNN Chosen
 def prepare_network(filename):

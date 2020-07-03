@@ -15,7 +15,11 @@ from flask_migrate import Migrate
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_login import LoginManager
 from flask_talisman import Talisman
+import gc
 
+
+#configure garvabe collection
+gc.enable()
 
 
 ###FLASK SETUP###
