@@ -4,7 +4,6 @@
 
 from flask import  redirect, url_for, Blueprint
 from flask_login import login_required, logout_user, current_user
-# from baknetworks import core
 
 # Set up users blueprint
 users = Blueprint('users',__name__)
