@@ -222,3 +222,4 @@ def gan():
 
     #Return Relevant Information to page
     return render_template('gan.html', commentform=commentform, commentquery=commentquery)
+
