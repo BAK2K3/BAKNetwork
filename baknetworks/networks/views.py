@@ -1,7 +1,9 @@
-##NETWORKS VIEWS.PY##
+#######################
+###NETWORKS VIEWS.PY###
+#######################
 
-from flask import render_template, request, Blueprint, flash, redirect, url_for, current_app
-from flask_login import login_required, current_user, login_manager
+from flask import render_template, Blueprint, redirect, url_for
+from flask_login import current_user
 from baknetworks.comment.forms import CommentForm 
 from baknetworks.models import Comment
 from baknetworks.networks.forms import RNNForm, CNNForm
@@ -10,7 +12,6 @@ from baknetworks.networks.predictions import prepare_network, generate_text, det
 from werkzeug.utils import secure_filename
 import numpy as np
 import os
-import gc
 
 #Set up Blueprint for Networks Views
 networks = Blueprint('networks',__name__)
@@ -18,10 +19,13 @@ networks = Blueprint('networks',__name__)
 #RNN Route
 @networks.route('/rnn/')
 def rnn_root():
+    #Run Garbage Collector
     gc.collect()
     return render_template('rnn.html')
 
+##################################################
 ##################SHAKESBOT#######################
+##################################################
 
 #Shakesbot Route
 @networks.route('/rnn/shakesbot', methods=['GET', 'POST'])
@@ -71,9 +75,10 @@ def rnn_shake():
     #Return Relevant Information to page
     return render_template('rnn_shake.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform)
 
-
+###################################################
 ##################TOLSTOYBOT#######################
- 
+###################################################
+
 #Tolstoy Route
 @networks.route('/rnn/tolstoybot', methods=['GET', 'POST'])
 def rnn_tolstoy():
@@ -121,8 +126,16 @@ def rnn_tolstoy():
     #Return Relevant Information to page
     return render_template('rnn_tolstoy.html', commentform=commentform, commentquery=commentquery, rnnform=rnnform)
 
+#CNN Route
+@networks.route('/cnn')
+def cnn():
+    #Run Garbage Collector
+    gc.collect()
+    return render_template('cnn.html')
 
+##############################################
 ##################COVID#######################
+##############################################
 
 #CNN Route
 @networks.route('/cnn/covid', methods=['GET', 'POST'])
@@ -161,12 +174,12 @@ def cnn_covid():
         
         #Run Model, obtain prediction
         cnnoutput = detect_covid(filepath)
-        # cnnoutput = cnnoutput[0][0]
+        
+        #Set text based output Classification based on prediction
         if cnnoutput[0][0] < 0.5:
             cnnoutput = "The model has predicted this is a COVID 19 X Ray"
         else:
-            cnnoutput = "The model has predicted this is a NORMAL X Ray"
-    
+            cnnoutput = "The model has predicted this is a NORMAL X Ray"  
 
         #Remove File
         os.remove(filepath)
@@ -183,12 +196,6 @@ def cnn_covid():
     #Return Relevant Information to page
     return render_template('cnn_covid.html', commentform=commentform, commentquery=commentquery, cnnform=cnnform)
 
-
-#CNN Route
-@networks.route('/cnn')
-def cnn():
-    gc.collect()
-    return render_template('cnn.html')
 
 #GAN Route
 @networks.route('/gan', methods=['GET', 'POST'])
@@ -215,6 +222,3 @@ def gan():
 
     #Return Relevant Information to page
     return render_template('gan.html', commentform=commentform, commentquery=commentquery)
-
-
-
