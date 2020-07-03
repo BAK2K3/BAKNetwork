@@ -2,30 +2,41 @@
 
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
-# from PIL import Image
+
 import tensorflow as tf
 from flask import url_for, current_app
 import numpy as np
 import os
-import gc
+
 
 #Function for preparing data depending on RNN Chosen
 def prepare_network(filename):
+
+    """Takes in the filename of the bot, prepares and returns the relevant character index mappings"""
+
     #Sets filepath for the corpus of text 
     path_to_file = os.path.join(current_app.root_path, "static/models/", filename+"".join('.txt'))
+
     #Open Text File
     text = open(path_to_file, 'r', encoding='utf-8').read()
+
     #Obtain set of vocabulary
     vocab = sorted(set(text))
+
     #Create a character index (forwards and backwards)
     char_to_ind = {char:ind for ind, char in enumerate(vocab)}
     ind_to_char = np.array(vocab)
+
     #Return both mappings  
     return char_to_ind, ind_to_char
 
 
 #Function for generating text from requested model
 def generate_text(start_seed, temperature, filename, num_generate=500):
+
+    """Prepares the model of name "filename", and generates "num_generate" amount of text
+    from specificied model, with a probability multiplier of specificed temperature, and 
+    returns the original seed and subsequently generated text."""
 
     #Obtain filepath for requested model
     filepath = os.path.join(current_app.root_path, "static/models/", filename+"".join('.h5'))
@@ -79,6 +90,9 @@ def generate_text(start_seed, temperature, filename, num_generate=500):
 
 #Function for passing image into COVID detector
 def detect_covid(input_image):
+
+    """Takes in filepath of image, converted it to a PIL, reshape and scale appropriately, 
+    feeds to model to obtain a prediction, and returns classifier of 0 (COVID) or 1 (Normal) """
 
     #Load model from correct filepath
     model = load_model(os.path.join(current_app.root_path, "static/models/covid_detector.h5"), compile=False)

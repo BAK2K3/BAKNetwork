@@ -7,7 +7,7 @@ import os
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = 'true'
-port = int(os.environ.get("PORT", 5000))
+# port = int(os.environ.get("PORT", 5000))
 
 from flask import Flask, request, redirect
 from flask_sqlalchemy import SQLAlchemy
