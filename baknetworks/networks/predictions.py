@@ -1,13 +1,13 @@
-##Predictions.py in Networks##
+################################
+###Predictions.py in Networks###
+################################
 
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
-
 import tensorflow as tf
 from flask import url_for, current_app
 import numpy as np
 import os
-
 
 #Function for preparing data depending on RNN Chosen
 def prepare_network(filename):

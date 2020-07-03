@@ -3,42 +3,26 @@
 #############################
 
 import os
-
-#Testing only
-# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
-
-os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = 'true'
-# port = int(os.environ.get("PORT", 5000))
-
-from flask import Flask, request, redirect
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from flask_migrate import Migrate
-from flask_dance.contrib.google import make_google_blueprint, google
-from flask_login import LoginManager
 from flask_talisman import Talisman
 import gc
 
-
-#configure garvabe collection
+#configure garbabe collection
 gc.enable()
 
+# os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = 'true'
 
-###FLASK SETUP###
+#Flask Setup
 app = Flask(__name__)
 app.static_folder = 'static'
 app.config['PREFERRED_URL_SCHEME'] = 'https'
+app.secret_key = os.environ.get('SECRET_KEY', None)
 
 #Define Root folder location
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-
-
-#Dev
-# app.config.from_json('config.json')
-#Deploy
-app.secret_key = os.environ.get('SECRET_KEY', None)
-
-#####Set up Content Security Policy##### 
+#Set up Content Security Policy 
 csp = {
     'default-src': [
          '\'self\'',
@@ -55,8 +39,7 @@ csp = {
         '\'sha256-km/e8rf92a5m6UdebHyfOamTMnsk/gCqVP1QCBMQqpI=\'',
         'cdn.jsdelivr.net',
         'code.jquery.com',
-        'stackpath.bootstrapcdn.com',
-        
+        'stackpath.bootstrapcdn.com',       
     ],
     'img-src': [
         '\'self\'',
@@ -66,14 +49,13 @@ csp = {
     ]
 }
 
-###Set up Talisman for HTTS/SSL####
+#Set up Talisman 
 talisman = Talisman(app, content_security_policy=csp)
 
-####Set up redirects to be HTTPS for OAuth####
+#Set up internal redirects to be HTTPS for OAuth
 class ReverseProxied(object):
     def __init__(self, app):
         self.app = app
-
     def __call__(self, environ, start_response):
         scheme = environ.get('HTTP_X_FORWARDED_PROTO')
         if scheme:
@@ -81,30 +63,27 @@ class ReverseProxied(object):
         return self.app(environ, start_response)
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 
-
-###Import Databases and User Oauth###
+#Import Database Models and Google User Oauth blueprint
 from baknetworks.models import db, login_manager
 from baknetworks.users.user_oauth import google_blueprint
 
-
-####SQL Set Up######
+#SQL Set Up
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-###Register Google OAuth blueprint####
+#Register Google OAuth blueprint
 app.register_blueprint(google_blueprint, url_prefix="/login")
 
-#####Connect database#####
+#Connect database
 db.init_app(app)
 Migrate(app,db)
 
-###Set up log in manager###
+#Set up log in manager
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
 
-
-###BLUEPRINTS###
+#Routing blueprint importing and registering
 from baknetworks.core.views import core
 from baknetworks.networks.views import networks
 from baknetworks.error_pages.handlers import error_pages
@@ -113,5 +92,3 @@ app.register_blueprint(core)
 app.register_blueprint(error_pages)
 app.register_blueprint(users)
 app.register_blueprint(networks)
-
-
