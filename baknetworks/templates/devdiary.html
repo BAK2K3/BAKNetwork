@@ -363,7 +363,7 @@
           
           <p>I took a quick look at the generate_images.py file from the Kaggle Dataset. This takes a generous sample of the available X Rays, and creates over a 6 thousand variations of these samples through rotation, reshaping, and transformation. This is what different is between the two types of X-Rays:</p>
           
-          <p><img src="{{ url_for('static', filename='XRaySamples.jpg')}}"  class="img-fluid text-center"></p>
+          <p><img src="{{ url_for('static', filename='XRaySamples.jpg')}}"  class="img-fluid text-center mx-auto d-block"></p>
           
           <p>As you can see, without a medical degree, there’s no chance a lay-person can take a look at these two images and categorise them in a matter of seconds. But that’s what I was hoping to accomplished through training a Convolutional Neural Network on these images.</p>
           
@@ -471,9 +471,9 @@
           
           <p>I implemented early stopped so as to prevent over-fitting, and after only 7 epochs, the model was trained, and the accuracy and validation loss took me by surprise. I ran the test image generator through the model to obtain sample predictions, and the model was reporting a 99.2% accuracy. </p>
           
-          <p><img src="{{ url_for('static', filename='model_history.png')}}"  class="img-fluid text-center"></p>
+          <p><img src="{{ url_for('static', filename='model_history.png')}}"  class="img-fluid text-center mx-auto d-block"></p>
           
-          <p><img src="{{ url_for('static', filename='Classification_Report.jpg')}}"  class="img-fluid text-center"></p>
+          <p><img src="{{ url_for('static', filename='Classification_Report.jpg')}}"  class="img-fluid mx-auto d-block"></p>
           
           <p>Now I understand that the dataset was limited given the nature of what we’re trying to detect, and while the image generators were implemented to expand upon these images to create as many variations of these samples as possible, the scope of data required to truly and more accurately detect COVID symptoms from <em>any</em> X ray image would be vast. But none-the-less, the model functioned as intended, and appeared to correctly classify COVID symptoms from chest X Ray images.</p>
           
