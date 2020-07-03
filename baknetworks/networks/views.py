@@ -12,6 +12,7 @@ from baknetworks.networks.predictions import prepare_network, generate_text, det
 from werkzeug.utils import secure_filename
 import numpy as np
 import os
+import gc
 
 #Set up Blueprint for Networks Views
 networks = Blueprint('networks',__name__)
