@@ -132,7 +132,7 @@
                                 {% for comment in commentquery %}
                                 <tr>
                                     <th scope="row">{{loop.index}}</th>
-                                    <td>{{comment.users.name[0]}}</td>
+                                    <td>{{comment.users.name.split(' ')[0]}}</td>
                                     <td>{{comment.date.date()}}</td>
                                     <th colspan="4">{{comment.text}}</th>
                                 </tr>
